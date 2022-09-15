@@ -21,7 +21,10 @@ public:
 
     ///Returns the program number for this shader
     GLuint getProgram() const;
-
+    void SetUniformMatrix4fv(QMatrix4x4 matrix, std::string name);
+    void SetUniform3f(GLfloat v1, GLfloat v2, GLfloat v3, std::string name);
+    void SetUniform1f(GLfloat v1, std::string name);
+    void SetUniform1i(GLint v1, std::string name);
 private:
     ///The int OpenGL gives as a reference to this shader
     GLuint mProgram;

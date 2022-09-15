@@ -5,11 +5,13 @@
 #include <QOpenGLFunctions_4_1_Core>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <unordered_map>
 
 class QOpenGLContext;
 class Shader;
 class MainWindow;
-
+class VisualObject;
+class Camera;
 /// This inherits from QWindow to get access to the Qt functionality and
 // OpenGL surface.
 // We also inherit from QOpenGLFunctions, to get access to the OpenGL functions
@@ -33,9 +35,16 @@ private slots:
 private:
     void init();            //initialize things we need before rendering
 
+    //Alt som renders i Map
+        std::unordered_map<std::string, VisualObject*> mMap;
+
+        //Referance to camera
+            Camera *mCamera;
+
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
 
+    std::unordered_map<std::string, Shader*> mShaders;
     Shader *mShaderProgram{nullptr};    //holds pointer the GLSL shader program
     GLint  mMatrixUniform;              //OpenGL reference to the Uniform in the shader program
 

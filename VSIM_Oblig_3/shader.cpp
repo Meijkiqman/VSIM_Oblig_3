@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
+#include "qmatrix4x4.h"
 //#include "GL/glew.h" - using QOpenGLFunctions instead
 
 #include "logger.h" //For our utility Logger class
@@ -107,4 +107,25 @@ void Shader::use()
 GLuint Shader::getProgram() const
 {
     return mProgram;
+}
+
+void Shader::SetUniformMatrix4fv(QMatrix4x4 matrix, std::string name){
+    //What matrix do we want to effect
+    auto m = glGetUniformLocation(mProgram, name.c_str());
+    //Sets the value from the matrix inserted
+    glUniformMatrix4fv(m, 1, GL_FALSE, matrix.constData());
+}
+
+void Shader::SetUniform3f(GLfloat v1, GLfloat v2, GLfloat v3, std::string name){
+    auto m = glGetUniformLocation(mProgram, name.c_str());
+    glUniform3f(m, v1, v2, v3);
+}
+
+void Shader::SetUniform1f(GLfloat v1, std::string name){
+    auto m = glGetUniformLocation(mProgram, name.c_str());
+    glUniform1f(m, v1);
+}
+void Shader::SetUniform1i(GLint v1, std::string name){
+    auto m = glGetUniformLocation(mProgram, name.c_str());
+    glUniform1i(m, v1);
 }
