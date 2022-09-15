@@ -12,6 +12,7 @@ class Shader;
 class MainWindow;
 class VisualObject;
 class Camera;
+class RollingBall;
 /// This inherits from QWindow to get access to the Qt functionality and
 // OpenGL surface.
 // We also inherit from QOpenGLFunctions, to get access to the OpenGL functions
@@ -40,7 +41,7 @@ private:
 
         //Referance to camera
             Camera *mCamera;
-
+    RollingBall* mBall;
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
 

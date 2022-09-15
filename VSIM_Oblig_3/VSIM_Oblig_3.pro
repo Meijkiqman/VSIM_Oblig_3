@@ -8,9 +8,11 @@ SOURCES += main.cpp \
     logger.cpp \
     mainwindow.cpp \
     renderwindow.cpp \
+    rollingball.cpp \
     shader.cpp \
     camera.cpp \
     objmesh.cpp \
+    surfacemesh.cpp \
     texture.cpp \
     vector3d.cpp \
     vertex.cpp \
@@ -20,9 +22,11 @@ HEADERS += \
     logger.h \
     mainwindow.h \
     renderwindow.h \
+    rollingball.h \
     shader.h \
     camera.h \
     objmesh.h \
+    surfacemesh.h \
     texture.h \
     vector3d.h \
     vertex.h \

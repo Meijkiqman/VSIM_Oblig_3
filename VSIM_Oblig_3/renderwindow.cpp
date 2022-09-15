@@ -17,6 +17,8 @@
 #include "visualobject.h"
 #include "objmesh.h"
 #include "texture.h"
+#include "rollingball.h"
+#include "surfacemesh.h"
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
 
@@ -105,9 +107,16 @@ void RenderWindow::init()
 
     //creating objects to be drawn
     mMap.insert(std::pair<std::string, VisualObject*>{"Surface",
-               new ObjMesh("../VSIM_Oblig_3/trianglesurface.obj", mShaders["PlainShader"])});
-    //mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
-    //           new ObjMesh("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
+               new SurfaceMesh(mShaders["PlainShader"])});
+    mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
+               new ObjMesh("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
+
+    mBall = dynamic_cast<RollingBall*>(mMap["Ball"]);
+
+    if(mBall){
+        mBall->SetSurface(mMap["Surface"]);
+    }
+
 
     //init every object
     for (auto it = mMap.begin(); it != mMap.end(); it++) {
@@ -132,7 +141,11 @@ void RenderWindow::render()
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
-    mCamera->lookAt(QVector3D(0, 1,-5), QVector3D(0,0,0), QVector3D(0,1,0));
+    QVector3D ballPos = mMap["Ball"]->GetPosition();
+    mCamera->lookAt(ballPos + QVector3D(-5, 2,0), ballPos, QVector3D(0,1,0));
+
+
+
     //Apply camera to all shaders
     for(auto it = mShaders.begin(); it != mShaders.end(); it++){
         (*it).second->use();
@@ -281,6 +294,34 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         mMainWindow->close();       //Shuts down the whole program
+    }
+    if(event->key() == Qt::Key_Space){
+        //Enable physics
+
+    }
+
+    if(event->key() == Qt::Key_W){
+        mMap["Ball"]->move(1,0,0);
+    }
+
+    if(event->key() == Qt::Key_S){
+        mMap["Ball"]->move(-1,0,0);
+    }
+
+    if(event->key() == Qt::Key_A){
+        mMap["Ball"]->move(0,0,1);
+    }
+
+    if(event->key() == Qt::Key_D){
+        mMap["Ball"]->move(0,0,-1);
+    }
+
+    if(event->key() == Qt::Key_Q){
+        mMap["Ball"]->move(0,1,0);
+    }
+
+    if(event->key() == Qt::Key_E){
+        mMap["Ball"]->move(0,-1,0);
     }
 
 }

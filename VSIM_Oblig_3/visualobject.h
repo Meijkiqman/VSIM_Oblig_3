@@ -30,7 +30,6 @@ public:
    void SetPosition(const QVector3D& position);
    void SetPosition(const QMatrix4x4& position);
    virtual void move(float dx, float dy, float dz);
-   virtual void move(float dt);
 
    QVector3D GetScale() const;
    void SetScale(const QVector3D& scale);
@@ -40,6 +39,10 @@ public:
    void SetRotation(const QVector3D& rotation);
    void rotate(float dx, float dy, float dz);
 
+   void EnablePhysics();
+   void DisablePhysics();
+   bool bPhysicsEnabled = false;
+   virtual void DoPhysics();
 protected:
    std::vector<Vertex> mVertices;
    std::vector<GLuint> mIndices;
