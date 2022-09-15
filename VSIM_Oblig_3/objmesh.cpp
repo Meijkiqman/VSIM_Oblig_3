@@ -7,12 +7,19 @@
 #include "shader.h"
 #include "vertex.h"
 #include "texture.h"
-ObjMesh::ObjMesh(std::string fileName, Shader& shader) : VisualObject(shader)
+
+ObjMesh::ObjMesh(std::string fileName){
+    readFile(fileName);
+    mTexture = nullptr;
+}
+
+ObjMesh::ObjMesh(std::string fileName, Shader* shader) : VisualObject(shader)
 {
     readFile(fileName);
     mMatrix.setToIdentity();
+    mTexture = nullptr;
 }
-ObjMesh::ObjMesh(std::string fileName, Shader& shader, Texture* texture) : VisualObject(shader)
+ObjMesh::ObjMesh(std::string fileName, Shader* shader, Texture* texture) : VisualObject(shader)
 {
     mTexture = texture;
 
@@ -22,7 +29,7 @@ ObjMesh::ObjMesh(std::string fileName, Shader& shader, Texture* texture) : Visua
 void ObjMesh::init(){
     initializeOpenGLFunctions();
     //Get the model matrix from shader
-    mMatrixUniform =  glGetUniformLocation(mShader.getProgram(), "mMatrix");
+    mMatrixUniform =  glGetUniformLocation(mShader->getProgram(), "mMatrix");
     //Vertex array object-VAO
     glGenVertexArrays(1, &mVAO);
     glBindVertexArray(mVAO);
@@ -53,7 +60,7 @@ void ObjMesh::init(){
     //glActiveTexture(GL_TEXTURE1);
     //glBindTexture(GL_TEXTURE_2D, mTexture->id());
     if(mTexture){
-        mTextureUniform = glGetUniformLocation(mShader.getProgram(), "textureSampler");
+        mTextureUniform = glGetUniformLocation(mShader->getProgram(), "textureSampler");
     }
     glBindVertexArray(0);
 }
@@ -65,9 +72,9 @@ void ObjMesh::draw(){
        glUniform1i(mTextureUniform, 0);
     }
     //use my shader
-    glUseProgram(mShader.getProgram());
+    glUseProgram(mShader->getProgram());
     //Send my model matrix
-    mShader.SetUniformMatrix4fv(mMatrix, "mMatrix");
+    mShader->SetUniformMatrix4fv(mMatrix, "mMatrix");
     //Draw object
     glBindVertexArray( mVAO);
     glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, nullptr);

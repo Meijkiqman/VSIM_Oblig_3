@@ -83,10 +83,6 @@ void RenderWindow::init()
     mLogger->logText(tempString);
 
     //Start the Qt OpenGL debugger
-    //Really helpfull when doing OpenGL
-    //Supported on most Windows machines - at least with NVidia GPUs
-    //reverts to plain glGetError() on Mac and other unsupported PCs
-    // - can be deleted
     startOpenGLDebugger();
 
     //general OpenGL stuff:
@@ -108,8 +104,17 @@ void RenderWindow::init()
     mCamera = new Camera();
 
     //creating objects to be drawn
-    //mMap.insert(std::pair<std::string, VisualObject*>{"Plane",
-     //           new ObjMesh("../3Dprog22/plane.obj", *mShaders["LightShader"], new Texture("../3Dprog22/hammer.bmp"))});
+    mMap.insert(std::pair<std::string, VisualObject*>{"Surface",
+               new ObjMesh("../VSIM_Oblig_3/trianglesurface.obj", mShaders["PlainShader"])});
+    //mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
+    //           new ObjMesh("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
+
+    //init every object
+    for (auto it = mMap.begin(); it != mMap.end(); it++) {
+        //Adds all visual objects to the quadtree
+        (*it).second->init();
+        (*it).second->UpdateTransform();
+    }
     glBindVertexArray(0);       //unbinds any VertexArray - good practice
 }
 
@@ -127,7 +132,7 @@ void RenderWindow::render()
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
-
+    mCamera->lookAt(QVector3D(0, 1,-5), QVector3D(0,0,0), QVector3D(0,1,0));
     //Apply camera to all shaders
     for(auto it = mShaders.begin(); it != mShaders.end(); it++){
         (*it).second->use();
@@ -278,13 +283,4 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         mMainWindow->close();       //Shuts down the whole program
     }
 
-    //You get the keyboard input like this
-//    if(event->key() == Qt::Key_A)
-//    {
-//        mMainWindow->statusBar()->showMessage(" AAAA");
-//    }
-//    if(event->key() == Qt::Key_S)
-//    {
-//        mMainWindow->statusBar()->showMessage(" SSSS");
-//    }
 }

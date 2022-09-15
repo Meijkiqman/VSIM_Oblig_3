@@ -2,11 +2,16 @@
 #include "vertex.h"
 #include "shader.h"
 #include "texture.h"
-VisualObject::VisualObject(Shader& shader) : mShader{shader}
+
+VisualObject::VisualObject(){
+    mMatrix.setToIdentity();
+}
+
+VisualObject::VisualObject(Shader* shader) : mShader{shader}
 {
     mMatrix.setToIdentity();
 }
-VisualObject::VisualObject(Shader& shader, Texture* texture) : mShader{shader}, mTexture{texture}
+VisualObject::VisualObject(Shader* shader, Texture* texture) : mShader{shader}, mTexture{texture}
 {
     if(mTexture){
         //mTextureUniform = glGetUniformLocation(mShader.getProgram(), "textureSampler");
@@ -20,7 +25,7 @@ VisualObject::~VisualObject() {
 void VisualObject::init(){
     initializeOpenGLFunctions();
     //Get the model matrix from shader
-    mMatrixUniform =  glGetUniformLocation(mShader.getProgram(), "mMatrix");
+    mMatrixUniform =  glGetUniformLocation(mShader->getProgram(), "mMatrix");
     //Vertex Array Object - VAO
     glGenVertexArrays(1, &mVAO);
     glBindVertexArray(mVAO);

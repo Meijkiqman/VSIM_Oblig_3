@@ -14,8 +14,9 @@ class Shader;
 class Texture;
 class VisualObject : public QOpenGLFunctions_4_1_Core {
 public:
-   VisualObject(Shader& shader);
-   VisualObject(Shader& shader, Texture* texture);
+   VisualObject();
+   VisualObject(Shader* shader);
+   VisualObject(Shader* shader, Texture* texture);
    ~VisualObject();
    virtual void init();
    virtual void draw();
@@ -59,7 +60,7 @@ protected:
    //Referanse til en mCollision, som er en kollisjonshape
    class CollisionShape* mCollision;
 public:
-   Shader &mShader;
+   Shader* mShader;
    Texture* mTexture;
 
    //Velocity
