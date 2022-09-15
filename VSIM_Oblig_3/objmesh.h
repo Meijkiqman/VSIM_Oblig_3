@@ -10,6 +10,8 @@ public:
     ObjMesh(std::string fileName, Shader* shader, Texture* texture);
     virtual void draw() override;
     virtual void init() override;
+    virtual void DoPhysics() override;
+
 protected:
     void readFile(std::string filePath);
     void writeFile(std::string filePath);

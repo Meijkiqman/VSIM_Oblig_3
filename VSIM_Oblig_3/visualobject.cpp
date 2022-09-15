@@ -65,6 +65,7 @@ void VisualObject::rotate(float dx, float dy, float dz)
 void VisualObject::EnablePhysics()
 {
     bPhysicsEnabled = true;
+    qDebug() << "Enabled physics!";
 }
 
 void VisualObject::DisablePhysics()
@@ -74,7 +75,7 @@ void VisualObject::DisablePhysics()
 
 void VisualObject::DoPhysics()
 {
-
+    qDebug() << "VO: DoPhysics() done!";
 }
 
 std::pair<float, float> VisualObject::getPosition2D()

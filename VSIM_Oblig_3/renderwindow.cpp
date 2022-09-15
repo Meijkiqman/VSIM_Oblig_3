@@ -109,7 +109,7 @@ void RenderWindow::init()
     mMap.insert(std::pair<std::string, VisualObject*>{"Surface",
                new SurfaceMesh(mShaders["PlainShader"])});
     mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
-               new ObjMesh("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
+               new RollingBall("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
 
     mBall = dynamic_cast<RollingBall*>(mMap["Ball"]);
 
@@ -297,7 +297,7 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_Space){
         //Enable physics
-
+        mMap["Ball"]->EnablePhysics();
     }
 
     if(event->key() == Qt::Key_W){

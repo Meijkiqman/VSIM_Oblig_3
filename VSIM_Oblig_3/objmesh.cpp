@@ -65,6 +65,11 @@ void ObjMesh::init(){
     glBindVertexArray(0);
 }
 
+void ObjMesh::DoPhysics()
+{
+
+}
+
 void ObjMesh::draw(){
     if(mTexture){
        glActiveTexture(GL_TEXTURE0);
