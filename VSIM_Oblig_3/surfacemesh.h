@@ -10,6 +10,7 @@ struct Result{
     Vertex v1;
     Vertex v2;
     Vertex v3;
+    float friction = 0;
 
 public:
     void setV1(const Vertex &newV1);

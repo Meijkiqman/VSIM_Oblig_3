@@ -141,8 +141,8 @@ void RenderWindow::render()
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
-    QVector3D ballPos = mMap["Ball"]->GetPosition();
-    mCamera->lookAt(ballPos + QVector3D(-5, 2,0), ballPos, QVector3D(0,1,0));
+    QVector3D ballPos = mMap["Surface"]->GetPosition();
+    mCamera->lookAt(ballPos + QVector3D(0, 2,1), ballPos, QVector3D(0,1,0));
 
 
 
@@ -298,6 +298,11 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Space){
         //Enable physics
         mMap["Ball"]->EnablePhysics();
+        dynamic_cast<RollingBall*>(mMap["Ball"])->ResetPhysics();
+    }
+    if(event->key() == Qt::Key_T){
+        //Enable physics
+        mMap["Ball"]->DisablePhysics();
     }
 
     if(event->key() == Qt::Key_W){

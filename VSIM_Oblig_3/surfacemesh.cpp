@@ -98,6 +98,7 @@ Result SurfaceMesh::GetHeight(QVector3D pos)
         r.v2 = mVertices[1];
         r.v3 = mVertices[2];
         qDebug() << "Returned triangle 1";
+        r.friction = 0.2;
         return r;
     }
     bary = GetBarycentric(pos, mVertices[1], mVertices[3], mVertices[2]);
@@ -112,6 +113,7 @@ Result SurfaceMesh::GetHeight(QVector3D pos)
         r.v2 = mVertices[3];
         r.v3 = mVertices[2];
         qDebug() << "Returned triangle 2";
+        r.friction = 0.2;
         return r;
     }
     bary = GetBarycentric(pos, mVertices[1], mVertices[5], mVertices[3]);
@@ -126,6 +128,7 @@ Result SurfaceMesh::GetHeight(QVector3D pos)
         r.v2 = mVertices[5];
         r.v3 = mVertices[3];
         qDebug() << "Returned triangle 3";
+        r.friction = 0.4;
         return r;
     }
     bary = GetBarycentric(pos, mVertices[1], mVertices[4], mVertices[5]);
@@ -140,6 +143,7 @@ Result SurfaceMesh::GetHeight(QVector3D pos)
         r.v2 = mVertices[4];
         r.v3 = mVertices[5];
         qDebug() << "Returned triangle 4";
+        r.friction = 0.2;
         return r;
     }
     return r;
@@ -182,7 +186,7 @@ QVector3D SurfaceMesh::GetBarycentric(QVector3D point, Vertex v1,  Vertex v2, Ve
     //Kryssprodukt for w, delt på x
     normal = QVector3D::crossProduct(p, q);
     w = normal.y() / x;
-    qDebug() << u << v << w;
+    //qDebug() << u << v << w;
     //Finn om punkten er innenfor eller utenfor triangelt
     return QVector3D(u, v, w);
 
