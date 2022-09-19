@@ -55,10 +55,7 @@ void RollingBall::DoPhysics()
                 if(normal != oldNormal){
                      //Ballen har rullet over på nytt triangel
                      //Beregner normalen til kolisjonsplanet, ligning 9
-
                      //Lage punkter fra de gamle vertexene
-
-
                      //Regne normalen mellom planene
                      float alpha = QVector3D::crossProduct(normal, oldNormal).length();
                      qDebug() << "alpha: " << alpha;
