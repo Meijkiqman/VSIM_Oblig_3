@@ -2,37 +2,50 @@
 #include "vertex.h"
 SurfaceMesh::SurfaceMesh(Shader* s) : VisualObject(s)
 {
-    //Vertex'er
-    Vertex v1(-2.4f, 0.45f, 2.f,    1.f, 0.3f,0.5f);
-    Vertex v2(0.f, 0.f, 2.f,        0.3f, 1.f,0.2f);
-    Vertex v3(-2.5f, 0.f, -2.f,     0.5f, 0.6f,1.f);
-    Vertex v4(0.f, .5f, -2.f,       1.f, 0.4f,0.2f);
-    Vertex v5(3.0f, 0.1f, 1.925f,   0.3f, 1.f,0.3f);
-    Vertex v6(3.0f, 0.f, -1.9f,     0.1f, 0.2f,2.f);
 
-    //1
-    mVertices.push_back(v1);
-    mVertices.push_back(v2);
-    mVertices.push_back(v3);
-    mVertices.push_back(v4);
-    mVertices.push_back(v5);
-    mVertices.push_back(v6);
+    //leser gjennom las txt fila for hver linje
 
-    mIndices.push_back(0);
-    mIndices.push_back(1);
-    mIndices.push_back(2);
+    //henter txt fila
+    std::ifstream file("../VSIM_Oblig_3/LAS/tile.txt");
+    std::vector<float> points;
 
-    mIndices.push_back(1);
-    mIndices.push_back(3);
-    mIndices.push_back(2);
+    if(file.is_open())
+    {
+        //current line
+        std::string line;
+        //finner mellomrom, finner sise space for å hente tall
+        int lastSpace = 0;
+        //lagerer stringen for å konvertere det til flloat
+        std::string  number;
+        while(std::getline(file, line) )
+        {
+            //sets last space to zero
+            lastSpace = 0;
+            //går gjennom hver linje
+            for(int i = 0; i< line.size(); i++)
+            {
+                //finner space
+                if(line[i] == ' ')
+                {
+                    number = line.substr(lastSpace, i-1);
+                    //konverter fra string til double
+                    points.push_back(std::stod(number));
+                    lastSpace = i;
+                }
+                else if(i == line.size() -1)
+                {
+                    number = line.substr(lastSpace, i);
+                    //konverter fra string til float
+                    points.push_back((std::stof(number)));
+                }
+            }
+        }
 
-    mIndices.push_back(1);
-    mIndices.push_back(5);
-    mIndices.push_back(3);
+    }
+    file.close();
 
-    mIndices.push_back(1);
-    mIndices.push_back(4);
-    mIndices.push_back(5);
+
+
 
 
 }
