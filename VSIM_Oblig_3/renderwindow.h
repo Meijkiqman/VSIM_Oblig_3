@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QElapsedTimer>
 #include <unordered_map>
+#include <QVector3D>
 
 class QOpenGLContext;
 class Shader;
@@ -37,11 +38,16 @@ private:
     void init();            //initialize things we need before rendering
 
     //Alt som renders i Map
-        std::unordered_map<std::string, VisualObject*> mMap;
+     std::unordered_map<std::string, VisualObject*> mMap;
 
         //Referance to camera
-            Camera *mCamera;
-    RollingBall* mBall;
+    Camera *mCamera;
+    QVector3D  CamPos  {0,0, 0};
+    QVector3D  CamDir {0,0,10};
+
+
+
+    //RollingBall* mBall;
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
 

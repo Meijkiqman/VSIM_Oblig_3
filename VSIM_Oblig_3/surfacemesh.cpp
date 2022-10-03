@@ -2,49 +2,79 @@
 #include "vertex.h"
 SurfaceMesh::SurfaceMesh(Shader* s) : VisualObject(s)
 {
-
     //leser gjennom las txt fila for hver linje
 
     //henter txt fila
-    std::ifstream file("../VSIM_Oblig_3/LAS/tile.txt");
-    std::vector<float> points;
+   std::ifstream file("../VSIM_Oblig_3/LAS/tile.txt");
+   std::vector<float> points;
 
-    if(file.is_open())
+   if(file.is_open())
+   {
+       //current line
+       std::string line;
+       //finner mellomrom, finner sise space for å hente tall
+       int lastSpace = 0;
+       //lagerer stringen for å konvertere det til flloat
+       std::string  number;
+       while(std::getline(file, line) )
+       {
+           //sets last space to zero
+           lastSpace = 0;
+           //går gjennom hver linje
+           for(int i = 0; i< line.size(); i++)
+           {
+               //finner space
+               if(line[i] == ' ')
+               {
+                   number = line.substr(lastSpace, i-1);
+                   //konverter fra string til double
+                   points.push_back(std::stod(number));
+                   lastSpace = i;
+
+               }
+               else if(i == line.size() -1)
+               {
+                   number = line.substr(lastSpace, i);
+                   //konverter fra string til float
+                   points.push_back((std::stof(number)));
+               }
+           }
+       }
+
+   }
+   file.close();
+
+   //tallene ble veldig høye og punktene langt fra hverandre,deler på 1000 0g 100 for å få de lavere
+    for(int i =0;i < points.size(); i++)
     {
-        //current line
-        std::string line;
-        //finner mellomrom, finner sise space for å hente tall
-        int lastSpace = 0;
-        //lagerer stringen for å konvertere det til flloat
-        std::string  number;
-        while(std::getline(file, line) )
+        //deler x på 100 for å få ned til 100 plass
+        if(points[i] >608800 && points[i] < 611000 )
         {
-            //sets last space to zero
-            lastSpace = 0;
-            //går gjennom hver linje
-            for(int i = 0; i< line.size(); i++)
-            {
-                //finner space
-                if(line[i] == ' ')
-                {
-                    number = line.substr(lastSpace, i-1);
-                    //konverter fra string til double
-                    points.push_back(std::stod(number));
-                    lastSpace = i;
-                }
-                else if(i == line.size() -1)
-                {
-                    number = line.substr(lastSpace, i);
-                    //konverter fra string til float
-                    points.push_back((std::stof(number)));
-                }
-            }
+            points[i] /= 10000;
         }
+        //deler på 1000 for å få ned til 100 plass
+        else if(points[i] > 6744000 &&points[i] < 6746000)
+        {
+            points[i] /= 100000;
+        }
+          //ganger med 10 for å få det til 1000 plass
+          else if(points[i] > 0 &&points[i] < 500)
+          {
+              points[i] /= 10;
+          }
 
-    }
-    file.close();
+  }
 
+   //bytter z og y akse og indekserer
+   for(int i = 0; i < points.size();i+=3)
+   {
+       mVertices.push_back(Vertex(points[i], points[i + 2], points[i + 1], ((rand() % 10) / 10), ((rand() % 10) / 10), ((rand() % 10) / 10)));
+   }
 
+   for (int i = 0; i < 500; i+=3)
+   {
+        qDebug() << points[i] << " " << points[i +2] << " " << points[i+1];
+   }
 
 
 
@@ -91,6 +121,10 @@ void SurfaceMesh::draw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEAB);
 
     glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
+
+    //aktiverer merkering av vertices, punkter
+    glPointSize(2.0f);
+    glDrawArrays(GL_POINTS, 0, mVertices.size());
     glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, reinterpret_cast<const void*>(0));
 }
 

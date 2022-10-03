@@ -108,14 +108,14 @@ void RenderWindow::init()
     //creating objects to be drawn
     mMap.insert(std::pair<std::string, VisualObject*>{"Surface",
                new SurfaceMesh(mShaders["PlainShader"])});
-    mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
-               new RollingBall("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
+   //mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
+   //           new RollingBall("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
 
-    mBall = dynamic_cast<RollingBall*>(mMap["Ball"]);
+    //mBall = dynamic_cast<RollingBall*>(mMap["Ball"]);
 
-    if(mBall){
-        mBall->SetSurface(mMap["Surface"]);
-    }
+    //if(mBall){
+    //    mBall->SetSurface(mMap["Surface"]);
+    //}
 
 
     //init every object
@@ -141,8 +141,7 @@ void RenderWindow::render()
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
-    QVector3D ballPos = mMap["Surface"]->GetPosition();
-    mCamera->lookAt(ballPos + QVector3D(0, 2,1), ballPos, QVector3D(0,1,0));
+    mCamera->lookAt(CamPos, CamDir, QVector3D(0,1,0));
 
 
 
@@ -295,38 +294,54 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     {
         mMainWindow->close();       //Shuts down the whole program
     }
-    if(event->key() == Qt::Key_Space){
-        //Enable physics
-        mMap["Ball"]->EnablePhysics();
-        dynamic_cast<RollingBall*>(mMap["Ball"])->ResetPhysics();
-    }
-    if(event->key() == Qt::Key_T){
-        //Enable physics
-        mMap["Ball"]->DisablePhysics();
-    }
+  // if(event->key() == Qt::Key_Space){
+  //     //Enable physics
+  //     mMap["Ball"]->EnablePhysics();
+  //     dynamic_cast<RollingBall*>(mMap["Ball"])->ResetPhysics();
+  // }
+  // if(event->key() == Qt::Key_T){
+  //     //Enable physics
+  //     mMap["Ball"]->DisablePhysics();
+  // }
 
-    if(event->key() == Qt::Key_W){
-        mMap["Ball"]->move(1,0,0);
-    }
 
-    if(event->key() == Qt::Key_S){
-        mMap["Ball"]->move(-1,0,0);
-    }
+    //setter opp Vector som lagrer posisjonen til kamera
+   QVector3D MovePos = CamPos;
+   //flytt kamera fremover
+   if(event->key() == Qt::Key_W)
+   {
+      CamPos.setZ(MovePos.z() + 1);
+      qDebug() << CamPos;
+   }
+   //flytt kamera bakover
+   if(event->key() == Qt::Key_S)
+   {
+       CamPos.setZ(MovePos.z() - 1);
+       qDebug() << CamPos;
+   }
 
-    if(event->key() == Qt::Key_A){
-        mMap["Ball"]->move(0,0,1);
-    }
+   if(event->key() == Qt::Key_A)
+   {
+       CamPos.setX(MovePos.x() -1);
+       qDebug() << CamPos;
+   }
 
-    if(event->key() == Qt::Key_D){
-        mMap["Ball"]->move(0,0,-1);
-    }
+   if(event->key() == Qt::Key_D)
+   {
+       CamPos.setX(MovePos.x() +1);
+       qDebug() << CamPos;
+   }
 
-    if(event->key() == Qt::Key_Q){
-        mMap["Ball"]->move(0,1,0);
-    }
+   if(event->key() == Qt::Key_Q)
+   {
+      CamPos.setY(MovePos.y() -1);
+      qDebug() << CamPos;
+   }
 
-    if(event->key() == Qt::Key_E){
-        mMap["Ball"]->move(0,-1,0);
-    }
+   if(event->key() == Qt::Key_E)
+   {
+        CamPos.setY(MovePos.y() +1);
+        qDebug() << CamPos;
+   }
 
 }
