@@ -2,40 +2,169 @@
 #include "vertex.h"
 SurfaceMesh::SurfaceMesh(Shader* s) : VisualObject(s)
 {
-    //Vertex'er
-    Vertex v1(-2.4f, 0.45f, 2.f,    1.f, 0.3f,0.5f);
-    Vertex v2(0.f, 0.f, 2.f,        0.3f, 1.f,0.2f);
-    Vertex v3(-2.5f, 0.f, -2.f,     0.5f, 0.6f,1.f);
-    Vertex v4(0.f, .5f, -2.f,       1.f, 0.4f,0.2f);
-    Vertex v5(3.0f, 0.1f, 1.925f,   0.3f, 1.f,0.3f);
-    Vertex v6(3.0f, 0.f, -1.9f,     0.1f, 0.2f,2.f);
+    //leser gjennom las txt fila for hver linje
 
-    //1
-    mVertices.push_back(v1);
-    mVertices.push_back(v2);
-    mVertices.push_back(v3);
-    mVertices.push_back(v4);
-    mVertices.push_back(v5);
-    mVertices.push_back(v6);
+    //henter txt fila
+   std::ifstream file("../VSIM_Oblig_3/LAS/test.txt");
+   std::vector<float> points;
 
-    mIndices.push_back(0);
-    mIndices.push_back(1);
-    mIndices.push_back(2);
+   if(file.is_open())
+   {
+       //current line
+       std::string line;
+       //finner mellomrom, finner sise space for å hente tall
+       int lastSpace = 0;
+       //lagerer stringen for å konvertere det til flloat eller double
+       std::string  number;
+       while(std::getline(file, line) )
+       {
+           //setter lastspace til 0 slik at man kan telle antall mellomrom
+           lastSpace = 0;
+           //går gjennom hver linje
+           for(int i = 0; i< line.size(); i++)
+           {
+               //finner space
+               if(line[i] == ' ')
+               {
+                   number = line.substr(lastSpace, i-1);
+                   //konverter fra string til double
+                   points.push_back(std::stod(number));
+                   lastSpace = i;
 
-    mIndices.push_back(1);
-    mIndices.push_back(3);
-    mIndices.push_back(2);
+               }
+               else if(i == line.size() -1)
+               {
+                   number = line.substr(lastSpace, i);
+                   //konverter fra string til float
+                   points.push_back((std::stof(number)));
+               }
+           }
+       }
 
-    mIndices.push_back(1);
-    mIndices.push_back(5);
-    mIndices.push_back(3);
+   }
+   file.close();
 
-    mIndices.push_back(1);
-    mIndices.push_back(4);
-    mIndices.push_back(5);
+   if(false)
+   {
+       float lowestX  =150;
+       float lowestY  =150;
+       float lowestZ  =150;
+       float highestX =150;
+       float highestY =150;
+       float highestZ =150;
+       for(int i = 0; i < points.size(); i+=3)
+       {
+           if(points[i] > highestX)
+           {
+               highestX = points[i];
+           }
+           if(points[i] < lowestX)
+           {
+               lowestX = points[i];
+           }
+           if(points[i+1] > highestY)
+           {
+               highestY = points[i+1];
+           }
+           if(points[i+1] < lowestY)
+           {
+               lowestY = points[i+1];
+           }
+           if(points[i+2] > highestZ)
+           {
+               highestZ = points[i+2];
+           }
+           if(points[i+2] < lowestZ)
+           {
+               lowestZ = points[i+2];
+           }
+       }
+       qDebug() << "lowest x value: " << lowestX;
+       qDebug() << "lowest y value: " << lowestY;
+       qDebug() << "lowest z value: " << lowestZ;
+       qDebug() << "highest x value: " << highestX;
+       qDebug() << "highest y value: " << highestY;
+       qDebug() << "highest z value: " << highestZ;
+   }
 
+   //tallene ble veldig høye og punktene langt fra hverandre,deler på 100, 100000 0g 1000000 for å få de lavere
+   for(int i =0;i < points.size(); i++)
+   {
 
+        //deler x på 100 for å få ned til 100 plass
+        if(points[i] >476800 && points[i] < 576800 )
+        {
+            points[i] /=100000;
+        }
+        //deler på 1000 for å få ned til 100 plass
+        else if(points[i] > 5.6762e+06 &&points[i] < 6.6762e+06)
+        {
+            points[i] /=1000000;
+        }
+           //ganger med 10 for å få det til 1000 plass
+          else if(points[i] > 0.019637 &&points[i] < 382.56)
+          {
+              points[i] /=100;
+          }
+
+    }
+
+    // lager et 1000x1000 vertex grid
+    for(int i = 0; i < 1000; i++)
+    {
+        for(int j = 0; j < 1000; j++)
+        {
+            mVertices.push_back(Vertex(j, sin(i), i, sin(j), cos(i), tan((i+j)/2)));
+        }
+    }
+
+    QVector3D pos;
+    int index;
+    for(int i = 0; i < 100000;i+=3)
+    {
+        pos = {points[i], points[i+1], points[i+2]};
+
+        index  = pos.x() + (1000-1 * pos.y());
+        if(index < mVertices.size())
+        {
+            mVertices[index].y = pos.z();
+        }
+    }
+    // indexerer terreng for å få en flate siden punktskyen er rar
+    for(int i = 0; i < 1000-1; i++)
+    {
+        for(int j = 0; j < 1000-1; j++)
+        {
+            for(int k = 0; k < 2; k++)
+            {
+                if(k == 0)
+                {
+                    mIndices.push_back(j+(1000*i));
+                    mIndices.push_back(j+(1000*i)+1);
+                    mIndices.push_back(j+(1000*i)+1000);
+                }
+                else
+                {
+                    mIndices.push_back(j+(1000*i)+1);
+                    mIndices.push_back(j+(1000*i)+1000);
+                    mIndices.push_back(j+(1000*i)+1000+1);
+                }
+            }
+
+        }
+    }
+   //bytter z og y akse og indekserer
+   //for(int i = 0; i < points.size();i+=33)
+   //{
+   //    mVertices.push_back(Vertex(points[i], points[i + 1], points[i + 2], 1, 1, 1));
+   //}
+
+   for (int i = 0; i < 30; i+=3)
+   {
+        qDebug() << points[i] << " " << points[i +2] << " " << points[i+1];
+   }
 }
+
 void SurfaceMesh::init()
 {
     initializeOpenGLFunctions();
@@ -78,6 +207,10 @@ void SurfaceMesh::draw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEAB);
 
     glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
+
+    //aktiverer merkering av vertices, punkter
+    glPointSize(5.0f);
+    glDrawArrays(GL_POINTS, 0, mVertices.size());
     glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, reinterpret_cast<const void*>(0));
 }
 

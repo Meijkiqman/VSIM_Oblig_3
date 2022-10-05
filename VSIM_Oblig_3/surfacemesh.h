@@ -3,6 +3,8 @@
 
 #include "vertex.h"
 #include "visualobject.h"
+#include <iostream>
+#include <string>
 
 class Vertex;
 struct Result{

@@ -67,7 +67,7 @@ void ObjMesh::init(){
 
 void ObjMesh::DoPhysics()
 {
-
+    qDebug() << "ObjMesh : Called physics!";
 }
 
 void ObjMesh::draw(){
