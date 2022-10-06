@@ -1,9 +1,10 @@
 #include "rollingball.h"
 #include "surfacemesh.h"
 #include "visualpoint.h"
+#include "shader.h"
 RollingBall::RollingBall(std::string fileName, Shader* shader) : ObjMesh(fileName, shader)
 {
-//SetScale(QVector3D(5,5,5));
+    SetScale(QVector3D(5,5,5));
     oldPos = GetPosition();
 
 }
@@ -14,7 +15,26 @@ void RollingBall::SetSurface(VisualObject* surface)
 
     m_SurfaceMesh = dynamic_cast<SurfaceMesh*>(m_Surface);
 }
+void RollingBall::draw()
+{
+    //use my shader
+    glUseProgram(mShader->getProgram());
+    //Send my model matrix
+    mShader->SetUniformMatrix4fv(mMatrix, "mMatrix");
+    //Draw object
+    glBindVertexArray( mVAO);
+    glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(0);
+    if(drawSpline && mBspline)
+    {
+        mBspline->draw();
+        if(mControlPointVisual)
+        {
+           mControlPointVisual->draw();
+        }
+    }
 
+}
 void RollingBall::DoPhysics()
 {
     QVector3D gravity(0, -9.81f, 0);
@@ -126,7 +146,7 @@ void RollingBall::AddLife()
 {
     //adds lifetime for creating points
     timeLived += 1;
-    if(timeLived % BsplinePointCounter)
+    if(timeLived % BsplinePointCounter ==0)
     {
         CreateBsplineP();
     }
@@ -134,6 +154,7 @@ void RollingBall::AddLife()
 
 void RollingBall::EnableSpline()
 {
+    qDebug() << "Enable spline called";
     if(!drawSpline)
     {
         CreateBspline();
@@ -152,11 +173,13 @@ void RollingBall::CreateBsplineP()
     Vertex* v = new Vertex(ballPos.x(), ballPos.y(), ballPos.z());
     //qDebug() << "Creating control point at " << ballPos;
     //qDebug() << "Vertexen er  på : " <<  QVector3D(v->x, v->y, v->z);
-    ControlPs.push_back(v);
+    ControlPs.push_back(*v);
 }
 
 void RollingBall::CreateBspline()
 {
+    qDebug() << " CREATE BSPLINE CALLED";
+
     //clears controlspoints
     t.clear();
     float step = 0.01f;
@@ -188,9 +211,10 @@ void RollingBall::CreateBspline()
                t.push_back(i);
            }
        }
+
     for(int i = 0; i < ControlPs.size(); i++)
     {
-           c.push_back(QVector3D(ControlPs[i]->x, ControlPs[i]->y,ControlPs[i]->z));
+           c.push_back(QVector3D(ControlPs[i].x, ControlPs[i].y,ControlPs[i].z));
     }
 
     std::vector<Vertex> mVisualPoints;
@@ -199,12 +223,15 @@ void RollingBall::CreateBspline()
         QVector3D point = EvaluateBezier(time);
         qDebug() << "Bezier function returned : " << point << " for time " << time;
 
-        mVisualPoints.push_back(Vertex(point.x(), point.y(), point.z(), 1, 1,1));
+        mVisualPoints.push_back(Vertex(point.x(), point.y(), point.z(), tan(time),cos(time)));
     }
+
     mBspline = new visualPoint(mVisualPoints);
+
+    mControlPointVisual = new visualPoint(ControlPs);
+    mControlPointVisual->init();
     mBspline->init();
     drawSpline = true;
-
 
 
 }
@@ -243,3 +270,4 @@ int RollingBall::findKnotInterval(float x)
     }
     return my;
 }
+

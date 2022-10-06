@@ -165,10 +165,15 @@ void RenderWindow::render()
     }
 
     //Render
-    if(ActivateRain){
+    if(ActivateRain)
+    {
         for(int i = 0; i < mRainDrops.size(); i++)
         {
-            mRainDrops[i]->AddLife();
+
+            if(mRainDrops[i]->GetTotalLifeTime() >= 300)
+            {
+               // mRainDrops[i]->EnableSpline();
+            }
             mRainDrops[i]->UpdateTransform();
             mRainDrops[i]->draw();
         }
@@ -313,32 +318,32 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
    //flytt kamera fremover
    if(event->key() == Qt::Key_W)
    {
-      CamPos.setZ(MovePos.z() + 1);
+      CamPos.setZ(MovePos.z() + 10);
    }
    //flytt kamera bakover
    if(event->key() == Qt::Key_S)
    {
-       CamPos.setZ(MovePos.z() - 1);
+       CamPos.setZ(MovePos.z() - 10);
    }
 
    if(event->key() == Qt::Key_A)
    {
-       CamPos.setX(MovePos.x() -1);
+       CamPos.setX(MovePos.x() -10);
    }
 
    if(event->key() == Qt::Key_D)
    {
-       CamPos.setX(MovePos.x() +1);
+       CamPos.setX(MovePos.x() +10);
    }
 
    if(event->key() == Qt::Key_Q)
    {
-      CamPos.setY(MovePos.y() -1);
+      CamPos.setY(MovePos.y() -10);
    }
 
    if(event->key() == Qt::Key_E)
    {
-        CamPos.setY(MovePos.y() +1);
+        CamPos.setY(MovePos.y() +10);
    }
 
    if(event->key() == Qt::Key_I)
@@ -353,7 +358,7 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         {
              for(int i = 0; i < mRainAmount; i++)
              {
-                 QVector3D RainSpawn( -10 +rand() % 20, 5,-10 + rand() % 20);
+                 QVector3D RainSpawn(rand() % 20, 30,rand() % 20);
                  RollingBall* rainBall = new RollingBall("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"]);
 
                  rainBall->init();

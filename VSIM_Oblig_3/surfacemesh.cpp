@@ -94,75 +94,87 @@ SurfaceMesh::SurfaceMesh(Shader* s) : VisualObject(s)
         //deler x på 100 for å få ned til 100 plass
         if(points[i] >476800 && points[i] < 576800 )
         {
-            points[i] /=100000;
+            points[i] /=1000000;
         }
         //deler på 1000 for å få ned til 100 plass
         else if(points[i] > 5.6762e+06 &&points[i] < 6.6762e+06)
         {
-            points[i] /=1000000;
+            points[i] /=10000000;
         }
-           //ganger med 10 for å få det til 1000 plass
-          else if(points[i] > 0.019637 &&points[i] < 382.56)
-          {
-              points[i] /=100;
-          }
-
-    }
-
-    // lager et 1000x1000 vertex grid
-    for(int i = 0; i < 1000; i++)
-    {
-        for(int j = 0; j < 1000; j++)
+          //ganger med 10 for å få det til 1000 plass
+        else if(points[i] > 0.019637 &&points[i] < 382.56)
         {
-            mVertices.push_back(Vertex(j, sin(i), i, sin(j), cos(i), tan((i+j)/2)));
+            points[i] /=1000;
         }
+
     }
 
-    QVector3D pos;
-    int index;
-    for(int i = 0; i < 100000;i+=3)
+    for(int i = 0; i < points.size(); i+=10)
     {
-        pos = {points[i], points[i+1], points[i+2]};
-
-        index  = pos.x() + (1000-1 * pos.y());
-        if(index < mVertices.size())
-        {
-            mVertices[index].y = pos.z();
-        }
+        mVertices.push_back(Vertex(points[i], points[i + 2], points[i + 1], sin(i), cos(i), tan(i)));
     }
-    // indexerer terreng for å få en flate siden punktskyen er rar
-    for(int i = 0; i < 1000-1; i++)
+
+    for (int i = 0; i < 30; i+=3)
     {
-        for(int j = 0; j < 1000-1; j++)
-        {
-            for(int k = 0; k < 2; k++)
-            {
-                if(k == 0)
-                {
-                    mIndices.push_back(j+(1000*i));
-                    mIndices.push_back(j+(1000*i)+1);
-                    mIndices.push_back(j+(1000*i)+1000);
-                }
-                else
-                {
-                    mIndices.push_back(j+(1000*i)+1);
-                    mIndices.push_back(j+(1000*i)+1000);
-                    mIndices.push_back(j+(1000*i)+1000+1);
-                }
-            }
-
-        }
+         qDebug() << points[i] << " " << points[i +2] << " " << points[i+1];
     }
-   //bytter z og y akse og indekserer
-   //for(int i = 0; i < points.size();i+=33)
-   //{
-   //    mVertices.push_back(Vertex(points[i], points[i + 1], points[i + 2], 1, 1, 1));
-   //}
 
-   for (int i = 0; i < 30; i+=3)
+   //Lager convex hull
+   std::vector<Quad> mQuads;
+   for (float i = 0; i < height; i+=res)
    {
-        qDebug() << points[i] << " " << points[i +2] << " " << points[i+1];
+       for (float j = 0; j < width; j+=res)
+       {
+           //Top right, top left, bottom right, bottom left
+           mQuads.push_back(Quad{ j, j+res, i, i+res });
+       }
    }
+
+   QVector3D pos;
+   float index = 0;
+   for(int i = 0; i < points.size(); i+=200)
+   {
+           pos = {points[i], points[i+1], points[i+2]};
+           if(pos.x() > width || pos.y() > height)
+           {}
+           else
+           {
+               index = (pos.x()/res) + (trunc((width/res)-1) * trunc(pos.y()/res));
+               index = trunc((pos.x()/res)) + (trunc((width/res)-1) * trunc(pos.y()/res));
+               index = trunc(index);
+               if(index < mQuads.size())
+               {
+                   mQuads[index].addHeight(pos.z());
+               }
+             }
+   }
+   //Lager vertexer
+   for (int i = 0; i < mQuads.size(); i++)
+   {
+       //Lager vertexer
+       mVertices.push_back(Vertex(mQuads[i].GetCenter().x, mQuads[i].GetHeight(), mQuads[i].GetCenter().y, sin(i), cos(i), tan(i)));
+   }
+
+  for(int j = 0; j < (height/res)-1; j++)
+  {
+      for(int i = 0; i < (width/res)-1 ; i++)
+      {
+          //Første index
+          mIndices.push_back(i+((width/res)*j));
+          ////Høyre for første
+          mIndices.push_back(i+((width/res)*j)+1);
+          ////Under første
+          mIndices.push_back(i+((width/res)*j)+width/res);
+          //Høyre for første
+          mIndices.push_back(i+((width/res)*j)+1);
+          //Under første
+          mIndices.push_back(i+((width/res)*j)+width/res);
+          //Til høyre for under første
+          mIndices.push_back(i+((width/res)*j)+width/res+1);
+      }
+  }
+   mQuads.clear();
+
 }
 
 void SurfaceMesh::init()
@@ -209,8 +221,9 @@ void SurfaceMesh::draw()
     glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
 
     //aktiverer merkering av vertices, punkter
-    glPointSize(5.0f);
-    glDrawArrays(GL_POINTS, 0, mVertices.size());
+    //glPointSize(2.0f);
+    //glDrawArrays(GL_POINTS, 0, mVertices.size());
+    //glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
     glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, reinterpret_cast<const void*>(0));
 }
 

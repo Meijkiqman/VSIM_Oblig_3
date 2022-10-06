@@ -10,6 +10,7 @@ public:
     RollingBall(std::string fileName, Shader* shader);
 
     void SetSurface(VisualObject* surface);
+    void draw() override;
     VisualObject* GetSurface(){return m_Surface;};
     void DoPhysics() override;
     void ResetPhysics();
@@ -60,11 +61,14 @@ private:
     //B-spline ting:
     int BsplinePointCounter = 60;
     void CreateBsplineP();
-    std::vector<Vertex*> ControlPs;
+    std::vector<Vertex> ControlPs;
     void CreateBspline();
 
+    class visualPoint* mControlPointVisual;
     class visualPoint* mBspline;
+
     bool drawSpline = false;
+
 
     //skjøtepunkt
     std::vector<float> t;
