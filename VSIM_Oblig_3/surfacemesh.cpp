@@ -107,6 +107,7 @@ SurfaceMesh::SurfaceMesh(Shader* s) : VisualObject(s)
             points[i] /=1000;
         }
 
+
     }
 
     for(int i = 0; i < points.size(); i+=10)
@@ -132,7 +133,7 @@ SurfaceMesh::SurfaceMesh(Shader* s) : VisualObject(s)
 
    QVector3D pos;
    float index = 0;
-   for(int i = 0; i < points.size(); i+=200)
+   for(int i = 0; i < points.size(); i+=500)
    {
            pos = {points[i], points[i+1], points[i+2]};
            if(pos.x() > width || pos.y() > height)
@@ -230,87 +231,97 @@ void SurfaceMesh::draw()
 Result SurfaceMesh::GetHeight(QVector3D pos)
 {
     Result r;
+    r.height =0;
     float a = 0, b = 0, c = 0, height = 0;
-    //Sjekker for trekant 1
-    QVector3D bary =  GetBarycentric(pos, mVertices[0], mVertices[1], mVertices[2]);
-    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
-        //Er denne trekanten
-        a = mVertices[0].y * bary.x();
-        b = mVertices[1].y * bary.y();
-        c = mVertices[2].y * bary.z();
-        height = a + b + c;
-        r.height = height;
-        r.v1 = mVertices[0];
-        r.v2 = mVertices[1];
-        r.v3 = mVertices[2];
-        qDebug() << "Returned triangle 1";
-        r.friction = 0.2;
-        return r;
-    }
-    bary = GetBarycentric(pos, mVertices[1], mVertices[3], mVertices[2]);
-    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
-        //Er denne trekanten
-        a = mVertices[1].y * bary.x();
-        b = mVertices[3].y * bary.y();
-        c = mVertices[2].y * bary.z();
-        height = a + b + c;
-        r.height = height;
-        r.v1 = mVertices[1];
-        r.v2 = mVertices[3];
-        r.v3 = mVertices[2];
-        qDebug() << "Returned triangle 2";
-        r.friction = 0.2;
-        return r;
-    }
-    bary = GetBarycentric(pos, mVertices[1], mVertices[5], mVertices[3]);
-    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
-        //Er denne trekanten
-        a = mVertices[1].y * bary.x();
-        b = mVertices[5].y * bary.y();
-        c = mVertices[3].y * bary.z();
-        height = a + b + c;
-        r.height = height;
-        r.v1 = mVertices[1];
-        r.v2 = mVertices[5];
-        r.v3 = mVertices[3];
-        qDebug() << "Returned triangle 3";
-        r.friction = 0.4;
-        return r;
-    }
-    bary = GetBarycentric(pos, mVertices[1], mVertices[4], mVertices[5]);
-    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
-        //Er denne trekanten
-        a = mVertices[1].y * bary.x();
-        b = mVertices[4].y * bary.y();
-        c = mVertices[5].y * bary.z();
-        height = a + b + c;
-        r.height = height;
-        r.v1 = mVertices[1];
-        r.v2 = mVertices[4];
-        r.v3 = mVertices[5];
-        qDebug() << "Returned triangle 4";
-        r.friction = 0.2;
-        return r;
-    }
+    float x = (trunc(pos.x()))/res;
+    float z = (trunc(pos.z()))/res;
+    //First vertex of the triangle
+
+    v1 = mVertices[trunc(x+(((width/res)-1)*z)                  )];
+    //Above
+    v2 = mVertices[trunc(x+(((width/res)-1)*z)-(width/res)-1    )];
+    //To the right
+    v3 = mVertices[trunc(x+(((width/res)-1)*z)+1                )];
+    //Under the right
+    v4 = mVertices[trunc(x+(((width/res)-1)*z)+(width/res)-1+1  )];
+    //Under v1
+    v5 = mVertices[trunc(x+(((width/res)-1)*z)+(width/res)-1    )];
+    //Left of v1
+    v6 = mVertices[trunc(x+(((width/res)-1)*z)-1                )];
+
+    //Sjekker for hver trekant som er inni quadden
+     QVector3D bary;
+    for(int i = 0; i < 5; i++)
+       {
+           if(i == 0)
+           {
+               //Første
+               inUseVertex1 = v1;
+               inUseVertex2 = v2;
+               inUseVertex3 = v3;
+           }
+           else if(i == 1)
+           {
+               inUseVertex1 = v1;
+               inUseVertex2 = v3;
+               inUseVertex3 = v4;
+           }
+           else if(i == 2)
+           {
+               inUseVertex1 = v1;
+               inUseVertex2 = v3;
+               inUseVertex3 = v4;
+           }
+           else if(i == 3)
+           {
+               inUseVertex1 = v1;
+               inUseVertex2 = v5;
+               inUseVertex3 = v6;
+           }
+           else if(i == 4)
+           {
+               inUseVertex1 = v1;
+               inUseVertex2 = v2;
+               inUseVertex3 = v6;
+           }
+           bary =  GetBarycentric(pos, inUseVertex1, inUseVertex2, inUseVertex3);
+           if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1)))
+           {
+               a = inUseVertex1.y * bary.x();
+               b = inUseVertex2.y * bary.y();
+               c = inUseVertex3.y * bary.z();
+               height = a + b + c;
+               r.height = height;
+               r.v1 = inUseVertex1;
+               r.v2 = inUseVertex2;
+               r.v3 = inUseVertex3;
+               r.friction = 0.2;
+               return r;
+
+             }
+           qDebug() << bary;
+           }
+
     return r;
 }
 
-QVector3D SurfaceMesh::GetBarycentric(QVector3D point, Vertex v1,  Vertex v2, Vertex v3){
+QVector3D SurfaceMesh::GetBarycentric(QVector3D point, Vertex v1,  Vertex v2, Vertex v3)
+{
     double u = 0, v = 0, w = 0;
-    QVector3D a(v1.x,v1.y,v1.z);
-    QVector3D b(v2.x,v2.y,v2.z);
-    QVector3D c(v3.x,v3.y,v3.z);
+    a = QVector3D(v1.x,v1.y,v1.z);
+    b = QVector3D(v2.x,v2.y,v2.z);
+    c = QVector3D(v3.x,v3.y,v3.z);
     //Finner x
-    QVector3D x1 = b - a;
-    QVector3D x2 = c - a;
+    x1 = b - a;
+    x2 = c - a;
     x1.setY(0);
     x2.setY(0);
-    QVector3D normal = QVector3D::crossProduct(x1, x2);
+    normal = QVector3D::crossProduct(x1, x2);
     float x = normal.length();
     //Regner kryssprodukt av p og q, og deler på x
     //Bruker a - point, b - point og c - point og kryssproduktet av kombinasjonen av de
-    QVector3D p = b - point;
-    QVector3D q = c - point;
+    p = b - point;
+    q = c - point;
     p.setY(0);
     q.setY(0);
     //Kryss produkt for u, delt på x

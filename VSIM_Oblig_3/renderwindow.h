@@ -44,6 +44,8 @@ private:
     Camera *mCamera;
     QVector3D  CamPos  {0,0, 0};
     QVector3D  CamDir {0,0,10};
+    class SurfaceMesh* mSurface;
+
 
 
     //regn ting

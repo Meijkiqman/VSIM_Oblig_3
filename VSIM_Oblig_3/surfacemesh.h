@@ -84,6 +84,35 @@ public:
     float height = 200;
     float res = 1;
 
+    //verdier og ærklaringer for barysentriske
+    //First v
+    Vertex v1;
+    //2nd v
+    Vertex v2;
+    //3rd v
+    Vertex v3;
+    //4th v
+    Vertex v4;
+    //5th v
+    Vertex v5;
+    //6th v
+    Vertex v6;
+
+    Vertex inUseVertex1;
+    Vertex inUseVertex2;
+    Vertex inUseVertex3;
+
+    QVector3D a;
+    QVector3D b;
+    QVector3D c;
+
+    QVector3D x1;
+    QVector3D x2;
+
+    QVector3D normal;
+
+    QVector3D p;
+    QVector3D q;
 
 
 };

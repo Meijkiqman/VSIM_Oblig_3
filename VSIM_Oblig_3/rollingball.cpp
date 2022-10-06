@@ -37,51 +37,41 @@ void RollingBall::draw()
 }
 void RollingBall::DoPhysics()
 {
+    //3d vector gravtisjon med 9.81 retning nedover.
     QVector3D gravity(0, -9.81f, 0);
-
-    //radius av ballen er størrelsen / 2
-    float radius = GetScale().x()/2;
-    if(true)
-    {
-        QVector3D nyPos = GetPosition() + oldVel/60 + 1/2*gravity/60;
-        oldPos = GetPosition();
-        oldVel = oldVel + gravity /60;
-        SetPosition(nyPos);
-        return;
-    }
-
+    //Radius finner man ved å finne størreksen på legemet og dele på 2
+    radius = GetScale().x()/2;
     if(m_SurfaceMesh)
     {
-
         //Får resultatet fra surfacemesh
         Result r = m_SurfaceMesh->GetHeight(GetPosition());
-
-
-
+        //om ballen er u luften, vil den falle i fritt fall.
+        if(GetPosition().y() > r.height + 5)
+        {
+            SetPosition(GetPosition() + oldVel/60 + 1/2*gravity/60);
+            oldVel = oldVel + gravity/60;
+            oldPos = GetPosition();
+            return;
+        }
         //Lagerer vertexene på triangelt
-        Vertex* v1 = &r.v1;
-        Vertex* v2 = &r.v2;
-        Vertex* v3 = &r.v3;
+        v1 = &r.v1;
+        v2 = &r.v2;
+        v3 = &r.v3;
         //Nåværende posistjon
         QVector3D currPos = GetPosition();
-        //Finner friksjonen på denne trekanten
-        float friction = r.friction;
-
         //Sjekk at vertex finnes
         if(v1 && v2 && v3){
             //Lager punkter fra vertexene
-            QVector3D p1(v1->x, v1->y, v1->z);
-            QVector3D p2(v2->x, v2->y, v2->z);
-            QVector3D p3(v3->x, v3->y, v3->z);
+            p1 = QVector3D(v1->x, v1->y, v1->z);
+            p2 = QVector3D(v2->x, v2->y, v2->z);
+            p3 = QVector3D(v3->x, v3->y, v3->z);
             //Finner normalen
-            QVector3D a = p2 - p1;
-            QVector3D b = p3 - p1;
-            QVector3D normal = QVector3D::crossProduct(a, b).normalized();
-
-            long double t = 1/60;
+            a = p2 - p1;
+            b = p3 - p1;
+            normal = QVector3D::crossProduct(a, b).normalized();
             //Akselerasjon, Lignign 7
-            QVector3D acc = gravity.y() * QVector3D(normal.x() * normal.y(), normal.y() * normal.z(), pow(normal.y(), 2)-1);
-            //R = r0 + v0t + 1/2at^2
+            QVector3D acc = -gravity.y() * QVector3D(normal.x() * normal.y(), normal.y() * normal.z(), pow(normal.y(), 2)-1);
+            //R = r0 + v0t + 1/2at^2, delt på 60 for dt = 1/60, 60 fps
             QVector3D nyPos = currPos + oldVel/60 + 1/2*acc/60;
             //Setter høyde + radius så den sitter på flaten
             nyPos.setY(r.height + radius);
@@ -91,42 +81,21 @@ void RollingBall::DoPhysics()
             oldVel = oldVel + acc /60;
 
             //SJekk om ballen er på ny trekant
-            if(oldv1 && oldv2 && oldv3){
-                if(normal != oldNormal){
+            if(oldv1 && oldv2 && oldv3 && oldv1 != v1 &&oldv2 != v2 &&oldv3 != v3)
+            {
+                if(normal != oldNormal)
+                {
                      //Ballen har rullet over på nytt triangel
                      //Beregner normalen til kolisjonsplanet, ligning 9
                      //Lage punkter fra de gamle vertexene
                      //Regne normalen mellom planene
-                     float alpha = QVector3D::crossProduct(normal, oldNormal).length();
-                     qDebug() << "alpha: " << alpha;
-                     if(alpha <= 3.14f){
-                         //Oppover møte
-                     }else{
-                         //Nedover møte
-                     }
                      //Finner en vector mellom de to veggene
-                     QVector3D x = (normal + oldNormal)/(normal+oldNormal).lengthSquared();
-                     qDebug() << "x: " << x;
+                     QVector3D x = (normal + oldNormal)/((normal+oldNormal).lengthSquared());
                      //Formel 8.8 skal finne den nye hastighet vektoren
                      QVector3D nyHastighet = oldVel - 2*(oldVel*x)*x;
-
-                     qDebug() << "Ny hast:" << nyHastighet;
-                     qDebug() << "Gammel hast: " << oldVel;
                      oldVel = nyHastighet;
-                    //Finne om det er kollisjon
-                     QVector3D r = GetPosition() - oldPos;
-                     if(r.lengthSquared() <= radius){
-                        //Har kollisjon
-                        qDebug() << "kollisjojn";
-                        //Sett ny posisjon over punktet
-
-                     }else{
-                        //Har ikke kollisjon
-                        qDebug() << "ikke kollisjon";
-                     }
                 }
             }
-
             oldv1 = &r.v1;
             oldv2 = &r.v2;
             oldv3 = &r.v3;
@@ -135,8 +104,15 @@ void RollingBall::DoPhysics()
         }
 
     }
+    else
+    {
+        //Bare tyngdekraften påvirker ballen
+        SetPosition(GetPosition() + oldVel/60 + 1/2*gravity/60 + QVector3D(sin(timeLived), 0 , sin(timeLived)));
+        oldVel = oldVel + gravity /60;
+        oldPos = GetPosition();
+        return;
+    }
 }
-
 void RollingBall::ResetPhysics()
 {
     oldVel = QVector3D(0,0,0);
@@ -182,7 +158,7 @@ void RollingBall::CreateBspline()
 
     //clears controlspoints
     t.clear();
-    float step = 0.01f;
+    float step = 0.01;
     //-1 pga 0 indeksering
     n = ControlPs.size();
     //d=2, for kvadratisk spline

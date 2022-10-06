@@ -112,6 +112,7 @@ void RenderWindow::init()
                new SurfaceMesh(mShaders["PlainShader"])});
     //mSurface = dynamic_cast<SurfaceMesh*>(mMap["Surface"]);
 
+    mSurface = dynamic_cast<SurfaceMesh*>(mMap["Surface"]);
     mMap.insert(std::pair<std::string, VisualObject*>{"Ball",
               new RollingBall("../VSIM_Oblig_3/ball.obj", mShaders["PlainShader"])});
     //Test ball
@@ -363,7 +364,11 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
 
                  rainBall->init();
 
+                 rainBall->SetSurface(mSurface);
+
                  rainBall->SetPosition(RainSpawn);
+
+
 
                  rainBall->EnablePhysics();
 
