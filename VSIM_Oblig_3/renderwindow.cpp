@@ -47,14 +47,6 @@ RenderWindow::~RenderWindow()
     glDeleteBuffers( 1, &mVBO );
 }
 
-//Simple global for vertices of a triangle - should belong to a class !
-static GLfloat vertices[] =
-{
-    // Positions         // Colors
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // Bottom Left
-    0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  // Bottom Right
-    0.0f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f   // Top
-};
 
 // Sets up the general OpenGL stuff and the buffers needed to render a triangle
 void RenderWindow::init()
@@ -123,22 +115,6 @@ void RenderWindow::init()
     glGenBuffers( 1, &mVBO );
     glBindBuffer( GL_ARRAY_BUFFER, mVBO );
 
-    //this sends the vertex data to the GPU:
-    glBufferData( GL_ARRAY_BUFFER,      //what buffer type
-                  sizeof( vertices ),   //how big buffer do we need
-                  vertices,             //the actual vertices
-                  GL_STATIC_DRAW        //should the buffer be updated on the GPU
-                  );
-
-    // 1st attribute buffer : vertices
-    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-    glVertexAttribPointer(
-                0,                  // attribute. No particular reason for 0, but must match layout(location = 0) in the vertex shader.
-                3,                  // size / number of elements of data type
-                GL_FLOAT,           // data type
-                GL_FALSE,           // normalize data
-                6 * sizeof(GLfloat),  // stride
-                (GLvoid*)0  );          // array buffer offset
     glEnableVertexAttribArray(0);
 
     // 2nd attribute buffer : colors
@@ -170,18 +146,7 @@ void RenderWindow::render()
 
     //what object to draw
     glBindVertexArray( mVAO );
-
-    //Since our shader uses a matrix and we rotate the triangle, we send the current matrix here
-    //Must be here to update each frame - if static object, it could be set only once
-    glUniformMatrix4fv( mMatrixUniform, //the location of the matrix in the shader
-                        1,              //count
-                        GL_FALSE,       //transpose the matrix before sending it?
-                        mMVPmatrix->constData());   //the data of the matrix
-
-    //the actual draw call
-    glDrawArrays(GL_TRIANGLES,      //draw mode
-                 0,                 //position of first vertex to draw (in the VBO inside the VAO!)
-                 3);                //how many vertices should be drawn - 3 for the triangle
+  
 
     //Calculate framerate before
     // checkForGLerrors() because that call takes a long time
@@ -195,11 +160,6 @@ void RenderWindow::render()
     // swapInterval is 1 by default which means that swapBuffers() will (hopefully) block
     // and wait for vsync.
     mContext->swapBuffers(this);
-
-    //just to make the triangle rotate - tweak this:
-    //                   degree, x,   y,   z -axis
-    if(mRotate)
-        mMVPmatrix->rotate(2.f, 0.f, 1.0, 0.f);
 }
 
 //This function is called from Qt when window is exposed (shown)
