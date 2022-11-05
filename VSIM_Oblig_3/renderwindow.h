@@ -5,9 +5,13 @@
 #include <QOpenGLFunctions_4_1_Core>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <unordered_map>
+#include <QVector3D>
 
 class QOpenGLContext;
 class Shader;
+class Camera;
+class VisualObject;
 class MainWindow;
 
 /// This inherits from QWindow to get access to the Qt functionality and
@@ -32,6 +36,23 @@ private slots:
 
 private:
     void init();            //initialize things we need before rendering
+
+
+
+    //rendering in mMap
+    std::unordered_map<std::string, VisualObject*> mMap;
+
+    //camera stuff
+    Camera* mCamera;
+    QVector3D camPos{ 0,0,0 };
+    QVector3D camLookAt{ 0,0,10 };
+
+    std::unordered_map<std::string, Shader*> mShaders;
+
+    //primitives
+    VisualObject* mCube;
+    VisualObject* mPlane;
+
 
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};

@@ -11,6 +11,10 @@
 #include <string>
 
 #include "shader.h"
+#include "objLoader.h"
+#include "camera.h"
+#include "texture.h"
+#include "visualobject.h"
 #include "mainwindow.h"
 #include "logger.h"
 
@@ -97,36 +101,45 @@ void RenderWindow::init()
     //    glEnable(GL_CULL_FACE);       //draws only front side of models - usually what you want - test it out!
     glClearColor(0.4f, 0.4f, 0.4f, 1.0f);    //gray color used in glClear GL_COLOR_BUFFER_BIT
 
-    //Compile shaders:
-    //NB: hardcoded path to files! You have to change this if you change directories for the project.
-    //Qt makes a build-folder besides the project folder. That is why we go down one directory
-    // (out of the build-folder) and then up into the project folder.
-    mShaderProgram = new Shader("../3Dprog22/plainshader.vert", "../3Dprog22/plainshader.frag");
 
-    //********************** Making the object to be drawn **********************
+    mShaders.insert(std::pair<std::string, Shader*>{"PlainShader", new Shader("../VSIM_Oblig_3/shaders/plainshader.vert",
+        "../VSIM_Oblig_3/shaders/plainshader.frag")});
 
-    //Making and using the Vertex Array Object - VAO
-    //VAO is a containter that holds VBOs
-    glGenVertexArrays( 1, &mVAO );
-    glBindVertexArray( mVAO );
+    mShaders.insert(std::pair<std::string, Shader*>{"phongshader", new Shader("../VSIM_Oblig_3/shaders/phongshader.vert",
+        "../VSIM_Oblig_3/shaders/phongshader.frag")});
 
-    //Making and using the Vertex Buffer Object to hold vertices - VBO
-    //Since the mVAO is bound, this VBO will belong to that VAO
-    glGenBuffers( 1, &mVBO );
-    glBindBuffer( GL_ARRAY_BUFFER, mVBO );
+    mShaders.insert(std::pair<std::string, Shader*>{"TextureShader", new Shader("../VSIM_Oblig_3/shaders/textureshader.vert",
+        "../VSIM_Oblig_3/shaders/textureshader.frag")});
 
-    glEnableVertexAttribArray(0);
+   
 
-    // 2nd attribute buffer : colors
-    // Same parameter list as above but attribute and offset is adjusted accoringly
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,  6 * sizeof(GLfloat),  (GLvoid*)(3 * sizeof(GLfloat)) );
-    glEnableVertexAttribArray(1);
+    //Set the material properties of the lightshader
+    mShaders["phongshader"]->use();
+    mShaders["phongshader"]->SetUniform1i(0, "material.diffuse");
+    mShaders["phongshader"]->SetUniform1i(1, "material.specular");
+    mShaders["phongshader"]->SetUniform1f(32.0f, "material.shininess");
 
-    // Get the matrixUniform location from the shader
-    // This has to match the "matrix" variable name in the vertex shader
-    // The uniform is used in the render() function to send the model matrix to the shader
-    mMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "matrix" );
+    mShaders["phongshader"]->SetUniform3f(0.2f, 1.0f, 0.3f, "dirLight.direction");
+    mShaders["phongshader"]->SetUniform3f(0.1f, 0.1f, 0.1f, "dirLight.ambient");
+    mShaders["phongshader"]->SetUniform3f(0.4f, 0.4f, 0.4f, "dirLight.diffuse");
+    mShaders["phongshader"]->SetUniform3f(0.5f, 0.5f, 0.5f, "dirLight.specular");
 
+    
+
+    //creates camera
+    mCamera = new Camera();
+
+
+    //primitives insert
+
+
+
+     //init every object
+    for (auto it = mMap.begin(); it != mMap.end(); it++) {
+        //Adds all visual objects to the quadtree
+        (*it).second->init();
+        (*it).second->UpdateTransform();
+    }
     glBindVertexArray(0);       //unbinds any VertexArray - good practice
 }
 
@@ -141,20 +154,27 @@ void RenderWindow::render()
     //clear the screen for each redraw
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //what shader to use
-    glUseProgram(mShaderProgram->getProgram() );
+    
+    mCamera->init();
+    // verticalAngle, aspectRatio, nearPlane,farPlane
+    mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 1000.0);
 
-    //what object to draw
-    glBindVertexArray( mVAO );
+
+    //Apply camera to all shaders
+    for (auto it = mShaders.begin(); it != mShaders.end(); it++) {
+        (*it).second->use();
+        //Send view and projection matrices to alle the shaders
+        (*it).second->SetUniformMatrix4fv(*mCamera->mVmatrix, "vMatrix");
+        (*it).second->SetUniformMatrix4fv(*mCamera->mPmatrix, "pMatrix");
+        //glUnifor
+        //The visual object sends its own modelMatrix to the shader so it dosent need to be done here
+        if ((*it).first == "phongshader") {
+            //Give all lights the camera position
+            (*it).second->SetUniform3f(mCamera->GetPosition().x(), mCamera->GetPosition().y(), mCamera->GetPosition().y(),
+                "cameraPosition");
+        }
+    }
   
-
-    //Calculate framerate before
-    // checkForGLerrors() because that call takes a long time
-    // and before swapBuffers(), else it will show the vsync time
-    calculateFramerate();
-
-    //using our expanded OpenGL debugger to check if everything is OK.
-    checkForGLerrors();
 
     //Qt require us to call this swapBuffers() -function.
     // swapInterval is 1 by default which means that swapBuffers() will (hopefully) block
@@ -282,6 +302,38 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         mMainWindow->close();       //Shuts down the whole program
+    }
+
+    QVector3D temp = camPos;
+    camLookAt = QVector3D(0, 0, 10);
+    if (event->key() == Qt::Key_W) 
+    {
+        camPos.setZ(temp.z() + 10);
+    }
+
+    if (event->key() == Qt::Key_S) 
+    {
+        camPos.setZ(temp.z() - 10);
+    }
+
+    if (event->key() == Qt::Key_A) 
+    {
+        camPos.setX(temp.x() + 10);
+    }
+
+    if (event->key() == Qt::Key_D)
+    {
+        camPos.setX(temp.x() - 10);
+    }
+
+    if (event->key() == Qt::Key_Q) 
+    {
+        camPos.setY(temp.y() + 10);
+    }
+
+    if (event->key() == Qt::Key_E) 
+    {
+        camPos.setY(temp.y() - 10);
     }
 
     //You get the keyboard input like this
