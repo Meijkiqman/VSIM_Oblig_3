@@ -136,14 +136,20 @@ void RenderWindow::init()
 
     //mPlane = new objLoader("../Eksamen-3Dprog/objFiles/ball.obj", *mShaders["phongshader"], new Texture("../Eksamen-3Dprog/bmpFiles/YELLOW.bmp"));
     //mMap.insert(std::pair<std::string, VisualObject*>{"plane", mPlane});
-    mMap.insert(std::pair<std::string, VisualObject*>{"plane",
-        new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["PlainShader"])});
 
+
+    mMap.insert(std::pair<std::string, VisualObject*>{"plane",
+        new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/chessboard.bmp"))});
+
+    mMap.insert(std::pair<std::string, VisualObject*>{"cube",
+        new objLoader("../VSIM_Oblig_3/objFiles/cube.obj", mShaders["PlainShader"])});
+
+    mMap["plane"]->SetPosition(QVector3D(0, 0, 0));
+    mMap["plane"]->SetScale(QVector3D(10, 10, 10));
 
 
      //init every object
     for (auto it = mMap.begin(); it != mMap.end(); it++) {
-        //Adds all visual objects to the quadtree
         (*it).second->init();
         (*it).second->UpdateTransform();
     }
@@ -153,9 +159,9 @@ void RenderWindow::init()
 // Called each frame - doing the rendering!!!
 void RenderWindow::render()
 {
+    calculateFramerate(); //display framerate
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this); //must be called every frame (every time mContext->swapBuffers is called)
-
     initializeOpenGLFunctions();    //must call this every frame it seems...
 
     //clear the screen for each redraw
@@ -164,7 +170,8 @@ void RenderWindow::render()
     
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
-    mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 1000.0);
+    mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
+    mCamera->lookAt(camPos, camPos + camLookAt, QVector3D(0, 1, 0));
 
 
     //Apply camera to all shaders
@@ -180,6 +187,14 @@ void RenderWindow::render()
             (*it).second->SetUniform3f(mCamera->GetPosition().x(), mCamera->GetPosition().y(), mCamera->GetPosition().y(),
                 "cameraPosition");
         }
+    }
+
+    //Draw all objects
+    for (auto it = mMap.begin(); it != mMap.end(); it++)
+    {
+        //Set the shader matrixes from camera
+        (*it).second->UpdateTransform();
+        (*it).second->draw();
     }
   
 
@@ -312,7 +327,7 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     }
 
     QVector3D temp = camPos;
-    camLookAt = QVector3D(0, 0, 10);
+    camLookAt = QVector3D(0, 0, 0);
     if (event->key() == Qt::Key_W) 
     {
         camPos.setZ(temp.z() + 10);
@@ -326,7 +341,7 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_A) 
     {
         camPos.setX(temp.x() + 10);
-        
+       // qDebug() << "camera pos:" << camPos;
     }
     
 
