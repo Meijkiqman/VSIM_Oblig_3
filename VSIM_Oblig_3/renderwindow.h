@@ -12,6 +12,7 @@ class QOpenGLContext;
 class Shader;
 class Camera;
 class VisualObject;
+class objLoader;
 class MainWindow;
 
 /// This inherits from QWindow to get access to the Qt functionality and
@@ -49,9 +50,9 @@ private:
 
     std::unordered_map<std::string, Shader*> mShaders;
 
-    //primitives
-    VisualObject* mCube;
-    VisualObject* mPlane;
+   //primitives
+    objLoader* mCube;
+    objLoader* mPlane;
 
 
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context

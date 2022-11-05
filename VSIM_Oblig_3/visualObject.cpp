@@ -54,7 +54,8 @@ void VisualObject::draw() {
 
 }
 
-void VisualObject::move(float dx, float dy, float dz) {
+void VisualObject::move(float dx, float dy, float dz) 
+{
     mPosition.translate(dx * 0.1f, dy * 0.1f, dz * 0.1f);
 }
 

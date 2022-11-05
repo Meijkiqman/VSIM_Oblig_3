@@ -131,6 +131,13 @@ void RenderWindow::init()
 
 
     //primitives insert
+    //mMap.insert(std::pair<std::string, VisualObject*>{"Plane",
+    //    new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", *mShaders["phongshader"], new Texture("../VSIM_Oblig_3/bmpFiles/Adam.bmp"))});
+
+    //mPlane = new objLoader("../Eksamen-3Dprog/objFiles/ball.obj", *mShaders["phongshader"], new Texture("../Eksamen-3Dprog/bmpFiles/YELLOW.bmp"));
+    //mMap.insert(std::pair<std::string, VisualObject*>{"plane", mPlane});
+    mMap.insert(std::pair<std::string, VisualObject*>{"plane",
+        new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["PlainShader"])});
 
 
 
@@ -319,7 +326,9 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_A) 
     {
         camPos.setX(temp.x() + 10);
+        
     }
+    
 
     if (event->key() == Qt::Key_D)
     {
