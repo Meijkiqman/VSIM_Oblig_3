@@ -45,7 +45,7 @@ private:
 
     //camera stuff
     Camera* mCamera;
-    QVector3D camPos{ 0,0,0 };
+    QVector3D camPos{ 0, 20,15 };
     QVector3D camLookAt{ 0,0,10 };
 
     std::unordered_map<std::string, Shader*> mShaders;

@@ -51,6 +51,7 @@ void VisualObject::draw() {
     glBindVertexArray(mVAO);
     glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
     glDrawArrays(GL_TRIANGLES, 0, mVertices.size());//mVertices.size());
+    //qDebug() << "draw finshed";
 
 }
 
@@ -73,6 +74,7 @@ std::pair<float, float> VisualObject::getPosition2D()
 void VisualObject::UpdateTransform()
 {
     mMatrix = mPosition * mRotation * mScale;
+    //qDebug() << "update transform";
 }
 
 QMatrix4x4 VisualObject::GetPosition() const

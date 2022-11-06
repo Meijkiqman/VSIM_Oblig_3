@@ -14,7 +14,7 @@
 #include "objLoader.h"
 #include "camera.h"
 #include "texture.h"
-#include "visualobject.h"
+#include "visualObject.h"
 #include "mainwindow.h"
 #include "logger.h"
 
@@ -35,10 +35,10 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
         qDebug() << "Context could not be made - quitting this application";
     }
 
-    //This is the matrix used to transform (rotate) the triangle
-    //You could do without, but then you have to simplify the shader and shader setup
-    mMVPmatrix = new QMatrix4x4{};
-    mMVPmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
+   // //This is the matrix used to transform (rotate) the triangle
+   // //You could do without, but then you have to simplify the shader and shader setup
+   // mMVPmatrix = new QMatrix4x4{};
+   // mMVPmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
 
     //Make the gameloop timer:
     mRenderTimer = new QTimer(this);
@@ -114,15 +114,15 @@ void RenderWindow::init()
    
 
     //Set the material properties of the lightshader
-    mShaders["phongshader"]->use();
-    mShaders["phongshader"]->SetUniform1i(0, "material.diffuse");
-    mShaders["phongshader"]->SetUniform1i(1, "material.specular");
-    mShaders["phongshader"]->SetUniform1f(32.0f, "material.shininess");
+   mShaders["phongshader"]->use();
+   mShaders["phongshader"]->SetUniform1i(0, "material.diffuse");
+   mShaders["phongshader"]->SetUniform1i(1, "material.specular");
+   mShaders["phongshader"]->SetUniform1f(32.0f, "material.shininess");
 
-    mShaders["phongshader"]->SetUniform3f(0.2f, 1.0f, 0.3f, "dirLight.direction");
-    mShaders["phongshader"]->SetUniform3f(0.1f, 0.1f, 0.1f, "dirLight.ambient");
-    mShaders["phongshader"]->SetUniform3f(0.4f, 0.4f, 0.4f, "dirLight.diffuse");
-    mShaders["phongshader"]->SetUniform3f(0.5f, 0.5f, 0.5f, "dirLight.specular");
+   mShaders["phongshader"]->SetUniform3f(0.2f, 1.0f, 0.3f, "dirLight.direction");
+   mShaders["phongshader"]->SetUniform3f(0.1f, 0.1f, 0.1f, "dirLight.ambient");
+   mShaders["phongshader"]->SetUniform3f(0.4f, 0.4f, 0.4f, "dirLight.diffuse");
+   mShaders["phongshader"]->SetUniform3f(0.5f, 0.5f, 0.5f, "dirLight.specular");
 
     
 
@@ -144,14 +144,20 @@ void RenderWindow::init()
     mMap.insert(std::pair<std::string, VisualObject*>{"cube",
         new objLoader("../VSIM_Oblig_3/objFiles/cube.obj", mShaders["PlainShader"])});
 
+    mMap.insert(std::pair<std::string, VisualObject*>{"ball",
+                  new objLoader("../VSIM_Oblig_3//objFiles/ball.obj", mShaders["PlainShader"])});
+
+
     mMap["plane"]->SetPosition(QVector3D(0, 0, 0));
     mMap["plane"]->SetScale(QVector3D(10, 10, 10));
 
 
      //init every object
-    for (auto it = mMap.begin(); it != mMap.end(); it++) {
+    for (auto it = mMap.begin(); it != mMap.end(); it++)
+    {
         (*it).second->init();
         (*it).second->UpdateTransform();
+        //qDebug() << "object init";
     }
     glBindVertexArray(0);       //unbinds any VertexArray - good practice
 }
@@ -159,6 +165,7 @@ void RenderWindow::init()
 // Called each frame - doing the rendering!!!
 void RenderWindow::render()
 {
+    //qDebug() << "render start";
     calculateFramerate(); //display framerate
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this); //must be called every frame (every time mContext->swapBuffers is called)
@@ -171,8 +178,9 @@ void RenderWindow::render()
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
-    mCamera->lookAt(camPos, camPos + camLookAt, QVector3D(0, 1, 0));
+    mCamera->lookAt(camPos, camLookAt, QVector3D(0, 1, 0));
 
+    //qDebug() << "camera created";
 
     //Apply camera to all shaders
     for (auto it = mShaders.begin(); it != mShaders.end(); it++) {
@@ -182,7 +190,8 @@ void RenderWindow::render()
         (*it).second->SetUniformMatrix4fv(*mCamera->mPmatrix, "pMatrix");
         //glUnifor
         //The visual object sends its own modelMatrix to the shader so it dosent need to be done here
-        if ((*it).first == "phongshader") {
+        if ((*it).first == "phongshader")
+        {
             //Give all lights the camera position
             (*it).second->SetUniform3f(mCamera->GetPosition().x(), mCamera->GetPosition().y(), mCamera->GetPosition().y(),
                 "cameraPosition");
@@ -192,9 +201,10 @@ void RenderWindow::render()
     //Draw all objects
     for (auto it = mMap.begin(); it != mMap.end(); it++)
     {
-        //Set the shader matrixes from camera
-        (*it).second->UpdateTransform();
-        (*it).second->draw();
+           //Set the shader matrixes from camera
+           (*it).second->UpdateTransform();
+           (*it).second->draw();
+            // qDebug() << "object draw finished";
     }
   
 
@@ -331,33 +341,38 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_W) 
     {
         camPos.setZ(temp.z() + 10);
+        qDebug() << "camera pos:" << camPos;
     }
 
     if (event->key() == Qt::Key_S) 
     {
         camPos.setZ(temp.z() - 10);
+        qDebug() << "camera pos:" << camPos;
     }
 
     if (event->key() == Qt::Key_A) 
     {
         camPos.setX(temp.x() + 10);
-       // qDebug() << "camera pos:" << camPos;
+        qDebug() << "camera pos:" << camPos;
     }
     
 
     if (event->key() == Qt::Key_D)
     {
         camPos.setX(temp.x() - 10);
+        qDebug() << "camera pos:" << camPos;
     }
 
     if (event->key() == Qt::Key_Q) 
     {
         camPos.setY(temp.y() + 10);
+        qDebug() << "camera pos:" << camPos;
     }
 
     if (event->key() == Qt::Key_E) 
     {
         camPos.setY(temp.y() - 10);
+        qDebug() << "camera pos:" << camPos;
     }
 
     //You get the keyboard input like this

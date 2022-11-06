@@ -18,7 +18,7 @@ objLoader::objLoader(std::string fileName, Shader* shader) : VisualObject(shader
 {
     readFile(fileName);
     mMatrix.setToIdentity();
-    mTexture = nullptr;
+   // mTexture = nullptr;
 }
 
 objLoader::objLoader(std::string fileName, Shader* shader, Texture* texture) : VisualObject(shader)
@@ -72,7 +72,8 @@ void objLoader::init()
 
 void objLoader::draw() 
 {
-    if (mTexture) {
+    if (mTexture)
+    {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, mTexture->id());
         glUniform1i(mTextureUniform, 0);
@@ -90,25 +91,21 @@ void objLoader::readFile(std::string filePath)
 {
     std::ifstream file;
     file.open(filePath, std::ifstream::in);
-    if (!file) 
+    if (!file)
     {
-        qDebug() << "Didnt open file" << QString::fromStdString(filePath);
+        qDebug() << "could not read file!" << QString::fromStdString(filePath);
+        return;
     }
-    else 
+    else
     {
-        qDebug() << "Did open file" << QString::fromStdString(filePath);
+        qDebug() << "file found:)" << QString::fromStdString(filePath);
     }
-    ////check if obj file
+    //checks if its .obj file
     std::string copypath = filePath;
-    if (copypath.substr(copypath.size() - 4, 4) != ".obj") 
+    if (copypath.substr(copypath.size() - 4, 4) != ".obj")
     {
         return;
     }
-
-    ////check if file is not  open
-    //if (!file.is_open()){
-    //    return; // return if file cant be opened
-    //}
 
     std::vector<Vector3D> tempVertices;
     std::vector<Vector3D> tempNormals;
@@ -132,23 +129,18 @@ void objLoader::readFile(std::string filePath)
         //Put the sstream word into oneWord
         sstream >> oneWord;
 
-        if (oneWord == "#") 
+        if (oneWord == "#")
         {
             //This is a comment, do nothing
             continue;
         }
-        //if(type == "m"){
-        //    continue;
-        //}
-        //if(type == "s"){
-        //    continue;
-        //}
-        if (oneWord == "") {
+
+        if (oneWord == "")
+        {
             //Ignores this line
             continue;
         }
-
-        if (oneWord == "v") 
+        if (oneWord == "v")
         {
             //Line for vertex positions
             Vector3D tempVertex;
@@ -173,7 +165,7 @@ void objLoader::readFile(std::string filePath)
             tempUVs.push_back(tempUV);
             continue;
         }
-        if (oneWord == "vn") 
+        if (oneWord == "vn")
         {
             //Line for vertex positions
             Vector3D tempNormal;
@@ -187,20 +179,18 @@ void objLoader::readFile(std::string filePath)
             tempNormals.push_back(tempNormal);
             continue;
         }
-        if (oneWord == "f") 
+        if (oneWord == "f")
         {
             int index, normal, uv;
             //behind f there is 3 words divided by /
-            for (int i = 0; i < 3; i++) 
-            {
+            for (int i = 0; i < 3; i++) {
                 sstream >> oneWord;
 
                 std::stringstream tempWord(oneWord);
                 std::string segment;
                 std::vector<std::string> segmentArray;
                 //Get each number, add them as a string to segment array
-                while (std::getline(tempWord, segment, '/')) 
-                {
+                while (std::getline(tempWord, segment, '/')) {
                     segmentArray.push_back(segment);
                 }
                 index = std::stoi(segmentArray[0]);
@@ -209,8 +199,7 @@ void objLoader::readFile(std::string filePath)
                 if (segmentArray[1] != "") {
                     uv = std::stoi(segmentArray[1]);
                 }
-                else 
-                {
+                else {
                     uv = 0;
                 }
                 //The normal is the third number, index 2 of the array
@@ -226,8 +215,7 @@ void objLoader::readFile(std::string filePath)
                     mVertices.push_back(tempVert);
 
                 }
-                else
-                {
+                else {
                     Vertex tempVert(tempVertices[index], tempNormals[normal], std::pair<float, float>(0, 0));
                     mVertices.push_back(tempVert);
                 }
@@ -242,6 +230,7 @@ void objLoader::readFile(std::string filePath)
     file.close();
     writeFile(copypath + ".txt");
 }
+
 
 void objLoader::writeFile(std::string filePath)
 {
