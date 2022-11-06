@@ -5,6 +5,7 @@ CONFIG      += c++17
 
 TARGET      = 3D-programmering
 
+
 SOURCES += main.cpp \
     logger.cpp \
     mainwindow.cpp \
@@ -17,6 +18,7 @@ SOURCES += main.cpp \
     visualobject.cpp \
     objLoader.cpp
 
+
 HEADERS += \
     logger.h \
     mainwindow.h \
@@ -27,7 +29,8 @@ HEADERS += \
     vector3d.h \
     vertex.h \
     visualobject.h \
-    objLoader.h 
+    objLoader.h
+
 
 FORMS += \
     mainwindow.ui
@@ -39,3 +42,5 @@ DISTFILES += \
     textureshsder.vert \
     phongshader.frag \
     phongshader.vert
+
+
