@@ -15,6 +15,9 @@
 #include "camera.h"
 #include "texture.h"
 #include "visualObject.h"
+#include "soundmanager.h"
+#include "vector3d.h"
+#include "soundsource.h"
 #include "mainwindow.h"
 #include "logger.h"
 
@@ -146,6 +149,31 @@ void RenderWindow::init()
     mMap["cube"]->SetPosition(QVector3D(10, 0, 0));
     mMap["cube"]->SetScale(QVector3D(5, 5, 5));
 
+    SoundManager::getInstance()->init();
+
+    //placing the listener:
+    Vector3D pos(0.0f, 0.0f, 0.0f);  //at world origo
+    Vector3D vel(0.0f, 0.0f, 0.0f);  //no velocity
+    Vector3D dir(0.0f, 0.0f, -1.0f); //direction into the screen (openal uses right hand axis)
+    Vector3D up(0.0f, 1.0f, 0.0f);   //Y is up
+
+    //set the listener position
+    SoundManager::getInstance()->updateListener(pos, vel, dir, up);
+
+    mExplosionSound = SoundManager::getInstance()->createSource(
+                   "Explosion", Vector3D(10.0f, 0.0f, 0.0f),
+                   "../VSIM_Oblig_3/Assets/explosion.wav", false, 1.0f);
+       mLaserSound = SoundManager::getInstance()->createSource(
+                   "Laser", Vector3D(20.0f, 0.0f, 0.0f),
+                   "../VSIM_Oblig_3/Assets/laser.wav", true, 0.4f);
+
+       mStereoSound = SoundManager::getInstance()->createSource(
+                   "Stereo", Vector3D(),
+                   "../VSIM_Oblig_3/Assets/stereo.wav", false, 1.0f);
+
+       mSong = SoundManager::getInstance()->createSource(
+                   "Caravan", Vector3D(),
+                   "../VSIM_Oblig_3/Assets/Caravan_mono.wav", false, 1.0f);
 
      //init every object
     for (auto it = mMap.begin(); it != mMap.end(); it++)
@@ -174,6 +202,8 @@ void RenderWindow::render()
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
     mCamera->lookAt(camPos, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
+
+
 
     //qDebug() << "camera created";
 
@@ -330,29 +360,40 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     {
         mMainWindow->close();       //Shuts down the whole program
     }
-    if(event->key() == Qt::Key_W){
+    if(event->key() == Qt::Key_W)
+    {
            mMap["ball"]->move(1,0,0);
-       }
+     }
 
-       if(event->key() == Qt::Key_S){
-           mMap["ball"]->move(-1,0,0);
-       }
+     if(event->key() == Qt::Key_S)
+     {
+         mMap["ball"]->move(-1,0,0);
+     }
 
-       if(event->key() == Qt::Key_A){
-           mMap["ball"]->move(0,0,1);
-       }
+     if(event->key() == Qt::Key_A)
+     {
+         mMap["ball"]->move(0,0,1);
+     }
 
-       if(event->key() == Qt::Key_D){
-           mMap["ball"]->move(0,0,-1);
-       }
+     if(event->key() == Qt::Key_D)
+     {
+         mMap["ball"]->move(0,0,-1);
+     }
 
-       if(event->key() == Qt::Key_Q){
-           mMap["ball"]->move(0,1,0);
-       }
+     if(event->key() == Qt::Key_Q){
+         mMap["ball"]->move(0,1,0);
+     }
 
-       if(event->key() == Qt::Key_E){
-           mMap["ball"]->move(0,-1,0);
-       }
+     if(event->key() == Qt::Key_E)
+     {
+         mMap["ball"]->move(0,-1,0);
+     }
+     if(event->key() == Qt::Key_G)
+     {
+         //1. Stereo sounds can not be moved ******************************
+             std::cout << "\nPlaying stereo wav file - positioning have no effect\n";
+             mStereoSound->play();
+     }
 
 
   // QVector3D temp = camPos;

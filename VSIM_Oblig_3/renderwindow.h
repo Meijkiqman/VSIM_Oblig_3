@@ -13,6 +13,7 @@ class Shader;
 class Camera;
 class VisualObject;
 class objLoader;
+class SoundSource;
 class MainWindow;
 
 /// This inherits from QWindow to get access to the Qt functionality and
@@ -54,6 +55,11 @@ private:
     objLoader* mCube;
     objLoader* mPlane;
 
+    //Some sounds...
+    SoundSource* mExplosionSound{nullptr};
+    SoundSource* mLaserSound{nullptr};
+    SoundSource* mStereoSound{nullptr};
+    SoundSource* mSong{nullptr};
 
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
