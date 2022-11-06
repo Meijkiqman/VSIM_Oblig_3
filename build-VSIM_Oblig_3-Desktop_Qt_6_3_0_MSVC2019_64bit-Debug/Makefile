@@ -406,6 +406,9 @@ distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
 	-$(DEL_FILE) .qmake.stash 3D-programmering.pdb
 
+debug\OpenAL32.dll:
+	copy /Y "C:/Users/siver/Documents/GitHub/VSIM_Oblig_3/VSIM_Oblig_3\openal\dlls\OpenAL32.dll" debug
+
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	$(MAKE) -f $(MAKEFILE).Debug mocclean

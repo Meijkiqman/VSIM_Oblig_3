@@ -16,7 +16,10 @@ SOURCES += main.cpp \
     vector3d.cpp \
     vertex.cpp \
     visualobject.cpp \
-    objLoader.cpp
+    objLoader.cpp \
+    soundsource.cpp \
+    soundmanager.cpp \
+    wavfilereader.cpp
 
 
 HEADERS += \
@@ -29,7 +32,10 @@ HEADERS += \
     vector3d.h \
     vertex.h \
     visualobject.h \
-    objLoader.h
+    objLoader.h \
+    soundmanager.h \
+    soundsource.h \
+    wavfilereader.h
 
 
 FORMS += \
@@ -43,4 +49,31 @@ DISTFILES += \
     phongshader.frag \
     phongshader.vert
 
+
+    #Set up dependencies for OpenAL
+    mac {
+        LIBS += -framework OpenAL
+    }
+
+    win32 {
+        INCLUDEPATH += ./openal/include/AL
+        LIBS += $$PWD/openal/libs/OpenAL32.lib
+
+    # Copy required DLL to output directory
+            CONFIG(debug, debug|release) {
+                OpenAL32.commands = copy /Y \"$$PWD\\openal\\dlls\\OpenAL32.dll\" debug
+                OpenAL32.target = debug/OpenAL32.dll
+
+                QMAKE_EXTRA_TARGETS += OpenAL32
+                PRE_TARGETDEPS += debug/OpenAL32.dll
+            } else:CONFIG(release, debug|release) {
+                OpenAL32.commands = copy /Y \"$$PWD\\openal\\dlls\\OpenAL32.dll\" release
+                OpenAL32.target = release/OpenAL32.dll
+
+                QMAKE_EXTRA_TARGETS += OpenAL32
+                PRE_TARGETDEPS += release/OpenAL32.dll release/OpenAL32.dll
+            } else {
+                error(Unknown set of dependencies.)
+            }
+    }
 
