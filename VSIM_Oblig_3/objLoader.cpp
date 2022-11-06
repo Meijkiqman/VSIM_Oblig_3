@@ -18,7 +18,7 @@ objLoader::objLoader(std::string fileName, Shader* shader) : VisualObject(shader
 {
     readFile(fileName);
     mMatrix.setToIdentity();
-   // mTexture = nullptr;
+    mTexture = nullptr;
 }
 
 objLoader::objLoader(std::string fileName, Shader* shader, Texture* texture) : VisualObject(shader)

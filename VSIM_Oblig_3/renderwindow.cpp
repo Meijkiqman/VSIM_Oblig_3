@@ -130,26 +130,21 @@ void RenderWindow::init()
     mCamera = new Camera();
 
 
-    //primitives insert
-    //mMap.insert(std::pair<std::string, VisualObject*>{"Plane",
-    //    new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", *mShaders["phongshader"], new Texture("../VSIM_Oblig_3/bmpFiles/Adam.bmp"))});
-
-    //mPlane = new objLoader("../Eksamen-3Dprog/objFiles/ball.obj", *mShaders["phongshader"], new Texture("../Eksamen-3Dprog/bmpFiles/YELLOW.bmp"));
-    //mMap.insert(std::pair<std::string, VisualObject*>{"plane", mPlane});
-
-
     mMap.insert(std::pair<std::string, VisualObject*>{"plane",
         new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/chessboard.bmp"))});
 
     mMap.insert(std::pair<std::string, VisualObject*>{"cube",
-        new objLoader("../VSIM_Oblig_3/objFiles/cube.obj", mShaders["PlainShader"])});
+        new objLoader("../VSIM_Oblig_3/objFiles/cube.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/Cubert.bmp"))});
 
     mMap.insert(std::pair<std::string, VisualObject*>{"ball",
-                  new objLoader("../VSIM_Oblig_3//objFiles/ball.obj", mShaders["PlainShader"])});
+                  new objLoader("../VSIM_Oblig_3//objFiles/ball.obj", mShaders["phongshader"])});
 
 
     mMap["plane"]->SetPosition(QVector3D(0, 0, 0));
-    mMap["plane"]->SetScale(QVector3D(10, 10, 10));
+    mMap["plane"]->SetScale(QVector3D(100, 100, 100));
+
+    mMap["cube"]->SetPosition(QVector3D(10, 0, 0));
+    mMap["cube"]->SetScale(QVector3D(5, 5, 5));
 
 
      //init every object
@@ -178,7 +173,7 @@ void RenderWindow::render()
     mCamera->init();
     // verticalAngle, aspectRatio, nearPlane,farPlane
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
-    mCamera->lookAt(camPos, camLookAt, QVector3D(0, 1, 0));
+    mCamera->lookAt(camPos, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
     //qDebug() << "camera created";
 
@@ -335,45 +330,76 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     {
         mMainWindow->close();       //Shuts down the whole program
     }
+    if(event->key() == Qt::Key_W){
+           mMap["ball"]->move(1,0,0);
+       }
 
-    QVector3D temp = camPos;
-    camLookAt = QVector3D(0, 0, 0);
-    if (event->key() == Qt::Key_W) 
-    {
-        camPos.setZ(temp.z() + 10);
-        qDebug() << "camera pos:" << camPos;
-    }
+       if(event->key() == Qt::Key_S){
+           mMap["ball"]->move(-1,0,0);
+       }
 
-    if (event->key() == Qt::Key_S) 
-    {
-        camPos.setZ(temp.z() - 10);
-        qDebug() << "camera pos:" << camPos;
-    }
+       if(event->key() == Qt::Key_A){
+           mMap["ball"]->move(0,0,1);
+       }
 
-    if (event->key() == Qt::Key_A) 
-    {
-        camPos.setX(temp.x() + 10);
-        qDebug() << "camera pos:" << camPos;
-    }
-    
+       if(event->key() == Qt::Key_D){
+           mMap["ball"]->move(0,0,-1);
+       }
 
-    if (event->key() == Qt::Key_D)
-    {
-        camPos.setX(temp.x() - 10);
-        qDebug() << "camera pos:" << camPos;
-    }
+       if(event->key() == Qt::Key_Q){
+           mMap["ball"]->move(0,1,0);
+       }
 
-    if (event->key() == Qt::Key_Q) 
-    {
-        camPos.setY(temp.y() + 10);
-        qDebug() << "camera pos:" << camPos;
-    }
+       if(event->key() == Qt::Key_E){
+           mMap["ball"]->move(0,-1,0);
+       }
 
-    if (event->key() == Qt::Key_E) 
-    {
-        camPos.setY(temp.y() - 10);
-        qDebug() << "camera pos:" << camPos;
-    }
+
+  // QVector3D temp = camPos;
+  // //camLookAt = QVector3D(0, 0, 0);
+  // if (event->key() == Qt::Key_W)
+  // {
+
+  //     camPos.setZ(temp.z() + 5);
+  //    // camLookAt.setZ(temp.z() + 5);
+  //     qDebug() << "camera pos:" << camPos;
+  // }
+
+  // if (event->key() == Qt::Key_S)
+  // {
+  //     camPos.setZ(temp.z()  - 5);
+  //     //camLookAt.setZ(temp.z()  - 5);
+  //     qDebug() << "camera pos:" << camPos;
+  // }
+
+  // if (event->key() == Qt::Key_A)
+  // {
+  //     camPos.setX(temp.x() - 5);
+  //    // camLookAt.setX(temp.x() - 5);
+  //     qDebug() << "camera pos:" << camPos;
+  // }
+  //
+
+  // if (event->key() == Qt::Key_D)
+  // {
+  //     camPos.setX(temp.x() + 5);
+  //    // camLookAt.setX(temp.x() + 5);
+  //     qDebug() << "camera pos:" << camPos;
+  // }
+
+  // if (event->key() == Qt::Key_Q)
+  // {
+  //     camPos.setY(temp.y() + 10);
+  //    // camLookAt.setY(temp.y() + 20);
+  //     qDebug() << "camera pos:" << camPos;
+  // }
+
+  // if (event->key() == Qt::Key_E)
+  // {
+  //     camPos.setY(temp.y() - 10);
+  //     // camLookAt.setY(temp.y() - 20);
+  //     qDebug() << "camera pos:" << camPos;
+  // }
 
     //You get the keyboard input like this
 //    if(event->key() == Qt::Key_A)
