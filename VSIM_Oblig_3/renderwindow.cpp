@@ -150,7 +150,7 @@ void RenderWindow::init()
 
 
     mMap["plane"]->SetPosition(QVector3D(0, -5, 0));
-    mMap["plane"]->SetScale(QVector3D(100, 100, 100));
+    mMap["plane"]->SetScale(QVector3D(10, 10, 10));
 
     mMap["cube"]->SetPosition(QVector3D(50, 0, 0));
     mMap["cube"]->SetScale(QVector3D(5, 5, 5));
