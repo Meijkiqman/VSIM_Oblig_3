@@ -71,6 +71,11 @@ std::pair<float, float> VisualObject::getPosition2D()
     auto col = mPosition.column(3);
     return std::pair<float, float>(col.x(), col.z());
 }
+
+Vector3D  VisualObject::getPosition()
+{
+    return Vector3D(mPosition.column(3).x(), mPosition.column(3).y(), mPosition.column(3).z());
+}
 void VisualObject::UpdateTransform()
 {
     mMatrix = mPosition * mRotation * mScale;

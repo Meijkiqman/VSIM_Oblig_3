@@ -23,6 +23,7 @@ public:
 	virtual void draw();
 
 	std::pair<float, float> getPosition2D();
+    Vector3D getPosition();
 
 	void UpdateTransform();
 

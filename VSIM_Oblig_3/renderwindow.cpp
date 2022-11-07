@@ -9,12 +9,15 @@
 #include <QDebug>
 
 #include <string>
+#include <iostream>
+#include <chrono>   //for sleep_for
+#include <thread>
 
 #include "shader.h"
 #include "objLoader.h"
 #include "camera.h"
 #include "texture.h"
-#include "visualObject.h"
+#include "visualobject.h"
 #include "soundmanager.h"
 #include "vector3d.h"
 #include "soundsource.h"
@@ -135,20 +138,21 @@ void RenderWindow::init()
     mCamera = new Camera();
 
 
+    //mMap insert of primitve objects:
     mMap.insert(std::pair<std::string, VisualObject*>{"plane",
         new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/chessboard.bmp"))});
 
     mMap.insert(std::pair<std::string, VisualObject*>{"cube",
-        new objLoader("../VSIM_Oblig_3/objFiles/cube.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/Cubert.bmp"))});
+        new objLoader("../VSIM_Oblig_3/objFiles/cube.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/sivert.bmp"))});
 
     mMap.insert(std::pair<std::string, VisualObject*>{"ball",
                   new objLoader("../VSIM_Oblig_3//objFiles/ball.obj", mShaders["phongshader"])});
 
 
-    mMap["plane"]->SetPosition(QVector3D(0, 0, 0));
+    mMap["plane"]->SetPosition(QVector3D(0, -5, 0));
     mMap["plane"]->SetScale(QVector3D(100, 100, 100));
 
-    mMap["cube"]->SetPosition(QVector3D(10, 0, 0));
+    mMap["cube"]->SetPosition(QVector3D(50, 0, 0));
     mMap["cube"]->SetScale(QVector3D(5, 5, 5));
 
     //lights
@@ -179,7 +183,7 @@ void RenderWindow::init()
                    "Explosion", Vector3D(10.0f, 0.0f, 0.0f),
                    "../VSIM_Oblig_3/Assets/explosion.wav", false, 1.0f);
        mLaserSound = SoundManager::getInstance()->createSource(
-                   "Laser", Vector3D(20.0f, 0.0f, 0.0f),
+                   "Laser", Vector3D(0.0f, 0.0f, 0.0f),
                    "../VSIM_Oblig_3/Assets/laser.wav", true, 0.4f);
 
        mStereoSound = SoundManager::getInstance()->createSource(
@@ -218,7 +222,22 @@ void RenderWindow::render()
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
     mCamera->lookAt(camPos, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
+    QVector3D ballPos = mMap["ball"]->GetPosition();
+    Vector3D soundPos = mMap["ball"]->getPosition();
+    //Vector3D postest = mMap["ball"]->getPosition();
 
+
+
+     mLaserSound->setPosition(soundPos);
+
+
+    for (auto it = mPointLightsMap.begin(); it != mPointLightsMap.end(); it++)
+       {
+           QVector3D dir = QVector3D(-1 + rand() % 2, -1 + rand() % 2, -1 + rand() % 2 );
+           QVector3D pos = (*it).second->GetPosition();
+           (*it).second->SetPosition((pos + dir) * 0.05f);
+
+       }
 
     //qDebug() << "camera created";
 
@@ -237,6 +256,8 @@ void RenderWindow::render()
                 "cameraPosition");
         }
     }
+
+
 
     //Draw all objects
     for (auto it = mMap.begin(); it != mMap.end(); it++)
@@ -377,37 +398,45 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_W)
     {
-           mMap["ball"]->move(0,0,-1);
+           mMap["ball"]->move(0,0,-5);
      }
 
      if(event->key() == Qt::Key_S)
      {
-         mMap["ball"]->move(0,0,1);
+         mMap["ball"]->move(0,0,5);
      }
 
      if(event->key() == Qt::Key_A)
      {
-         mMap["ball"]->move(-1,0,0);
+         mMap["ball"]->move(-5,0,0);
      }
 
      if(event->key() == Qt::Key_D)
      {
-         mMap["ball"]->move(1,0,0);
+         mMap["ball"]->move(5,0,0);
      }
 
      if(event->key() == Qt::Key_Q){
-         mMap["ball"]->move(0,1,0);
+         mMap["ball"]->move(0,5,0);
      }
 
      if(event->key() == Qt::Key_E)
      {
-         mMap["ball"]->move(0,-1,0);
+         mMap["ball"]->move(0,-5,0);
      }
      if(event->key() == Qt::Key_G)
      {
          //1. Stereo sounds can not be moved ******************************
              std::cout << "\nPlaying stereo wav file - positioning have no effect\n";
              mStereoSound->play();
+     }
+     if(event->key() == Qt::Key_H)
+     {
+         std::cout << "\nPlaying looping Laser sound\n";
+         mLaserSound->play();
+          std::this_thread::sleep_for(std::chrono::milliseconds(500));
+         // mLaserSound->stop();
+
      }
 
 
