@@ -14,6 +14,7 @@ class Camera;
 class VisualObject;
 class objLoader;
 class SoundSource;
+class PointLight;
 class MainWindow;
 
 /// This inherits from QWindow to get access to the Qt functionality and
@@ -43,6 +44,11 @@ private:
 
     //rendering in mMap
     std::unordered_map<std::string, VisualObject*> mMap;
+    //lights in mMap
+    std::unordered_map<std::string, PointLight*> mPointLightsMap;
+
+    //for spawning several lights WIP
+    int mPointLights =0;
 
     //camera stuff
     Camera* mCamera;

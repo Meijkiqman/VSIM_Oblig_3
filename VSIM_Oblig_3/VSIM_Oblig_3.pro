@@ -7,8 +7,10 @@ TARGET      = 3D-programmering
 
 
 SOURCES += main.cpp \
+    lighting.cpp \
     logger.cpp \
     mainwindow.cpp \
+    pointlight.cpp \
     renderwindow.cpp \
     shader.cpp \
     camera.cpp \
@@ -23,8 +25,10 @@ SOURCES += main.cpp \
 
 
 HEADERS += \
+    lighting.h \
     logger.h \
     mainwindow.h \
+    pointlight.h \
     renderwindow.h \
     shader.h\
     camera.h \ 

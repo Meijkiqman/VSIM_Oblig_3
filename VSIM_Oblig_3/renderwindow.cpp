@@ -18,6 +18,8 @@
 #include "soundmanager.h"
 #include "vector3d.h"
 #include "soundsource.h"
+#include "lighting.h"
+#include "pointlight.h"
 #include "mainwindow.h"
 #include "logger.h"
 
@@ -148,6 +150,19 @@ void RenderWindow::init()
 
     mMap["cube"]->SetPosition(QVector3D(10, 0, 0));
     mMap["cube"]->SetScale(QVector3D(5, 5, 5));
+
+    //lights
+     mMap.insert(std::pair<std::string, VisualObject*>{"pointLight ", new PointLight(mShaders["phongshader"], new Texture())});
+
+     for (int i = 0; i < 10; i++)
+      {
+          //Construct point light with light shader and with its index, so it call set it correctly in the draw function
+          mMap.insert(std::pair<std::string, VisualObject*>{"PointLight " + std::to_string(i), new PointLight(mShaders["phongshader"], new Texture(), mPointLights)});
+          mPointLights++;
+      }
+        //Set the phongshader.frag's pointLightUsed to the amount of point lights
+        mShaders["phongshader"]->SetUniform1i(mPointLights, "pointLightsUsed");
+
 
     SoundManager::getInstance()->init();
 
@@ -362,22 +377,22 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_W)
     {
-           mMap["ball"]->move(1,0,0);
+           mMap["ball"]->move(0,0,-1);
      }
 
      if(event->key() == Qt::Key_S)
      {
-         mMap["ball"]->move(-1,0,0);
+         mMap["ball"]->move(0,0,1);
      }
 
      if(event->key() == Qt::Key_A)
      {
-         mMap["ball"]->move(0,0,1);
+         mMap["ball"]->move(-1,0,0);
      }
 
      if(event->key() == Qt::Key_D)
      {
-         mMap["ball"]->move(0,0,-1);
+         mMap["ball"]->move(1,0,0);
      }
 
      if(event->key() == Qt::Key_Q){
