@@ -7,6 +7,7 @@ TARGET      = 3D-programmering
 
 
 SOURCES += main.cpp \
+    heightmap.cpp \
     lighting.cpp \
     logger.cpp \
     mainwindow.cpp \
@@ -25,6 +26,7 @@ SOURCES += main.cpp \
 
 
 HEADERS += \
+    heightmap.h \
     lighting.h \
     logger.h \
     mainwindow.h \

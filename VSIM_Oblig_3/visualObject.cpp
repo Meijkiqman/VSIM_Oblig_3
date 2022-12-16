@@ -1,9 +1,9 @@
-#include "visualobject.h"
+#include "visualObject.h"
 #include "vertex.h"
 #include "shader.h"
 #include "texture.h"
 
-VisualObject::VisualObject() 
+VisualObject::VisualObject()
 {
     mMatrix.setToIdentity();
 }

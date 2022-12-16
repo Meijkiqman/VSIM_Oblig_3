@@ -7,6 +7,7 @@
 #include "vertex.h"
 #include "vector3d.h"
 
+
 class Vertex;
 class Texture;
 class Shader;
@@ -27,13 +28,19 @@ public:
 
 	void UpdateTransform();
 
-	QMatrix4x4 GetPosition() const;
-	QVector3D GetPosition();
-	void SetPosition(const QVector3D& position);
-	void SetPosition(const QMatrix4x4& position);
+    //QMatrix4x4 GetPosition() const;
+    //QVector3D GetPosition();
+    //void SetPosition(const QVector3D& position);
+    //void SetPosition(const QMatrix4x4& position);
+    //position
+    QMatrix4x4  GetPosition() const;
+    QVector3D GetPosition();
+    void SetPosition(const  QVector3D& position);
+    void SetPosition(const  QMatrix4x4& position);
+
 	virtual void move(float dx, float dy, float dz);
 
-	QVector3D GetScale() const;
+	QVector3D GetScale() const;   
 	void SetScale(const QVector3D& scale);
 	void SetScale(const QMatrix4x4& scale);
 
@@ -49,13 +56,19 @@ protected:
 	GLuint mVBO{ 0 };
 	GLint mTextureUniform{ 0 };
 	GLint mMatrixUniform{ 0 };
-	QMatrix4x4 mMatrix;
+    QMatrix4x4 mMatrix;
 
-	QMatrix4x4 mPosition;
-	QMatrix4x4 mRotation;
-	QMatrix4x4 mScale;
+    QMatrix4x4 mPosition;
+    QMatrix4x4 mRotation;
+    QMatrix4x4 mScale;
 
-	QVector3D mVelocity;
+    //QVector3D mVelocity;
+   // glm::mat4 mMatrix;
+   //
+   // glm::mat4 mPosition;
+   // glm::mat4 mRotation;
+   // glm::mat4 mScale;
+
 
 public:
 	Shader* mShader;
