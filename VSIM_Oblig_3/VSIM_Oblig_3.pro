@@ -15,6 +15,7 @@ SOURCES += main.cpp \
     renderwindow.cpp \
     shader.cpp \
     camera.cpp \
+    sun.cpp \
     texture.cpp \
     vector3d.cpp \
     vertex.cpp \
@@ -33,7 +34,8 @@ HEADERS += \
     pointlight.h \
     renderwindow.h \
     shader.h\
-    camera.h \ 
+    camera.h \  \
+    sun.h
     texture.h \
     vector3d.h \
     vertex.h \

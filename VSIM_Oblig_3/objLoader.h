@@ -1,7 +1,7 @@
 #ifndef OBJLOADER_H
 #define OBJLOADER_H
 
-#include "visualobject.h"
+#include "visualObject.h"
 class objLoader : public VisualObject
 {
 public:
