@@ -34,8 +34,8 @@ HEADERS += \
     pointlight.h \
     renderwindow.h \
     shader.h\
-    camera.h \  \
-    sun.h
+    camera.h \
+    sun.h \
     texture.h \
     vector3d.h \
     vertex.h \

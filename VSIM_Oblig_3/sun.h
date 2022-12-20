@@ -2,10 +2,15 @@
 #define SUN_H
 
 
-class sun
+#include "objloader.h"
+
+class sun : public objLoader
 {
 public:
-    sun();
+    sun(std::string fileName, Shader* shader);
+    bool SunPatrol = true;
+    float SunPatrolDir = 0;
+    float SunPos;
 };
 
 #endif // SUN_H
