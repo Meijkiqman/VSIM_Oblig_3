@@ -7,6 +7,7 @@ TARGET      = 3D-programmering
 
 
 SOURCES += main.cpp \
+    bezier.cpp \
     heightmap.cpp \
     lighting.cpp \
     logger.cpp \
@@ -23,10 +24,12 @@ SOURCES += main.cpp \
     objLoader.cpp \
     soundsource.cpp \
     soundmanager.cpp \
+    visualpoint.cpp \
     wavfilereader.cpp
 
 
 HEADERS += \
+    bezier.h \
     heightmap.h \
     lighting.h \
     logger.h \
@@ -43,6 +46,7 @@ HEADERS += \
     objLoader.h \
     soundmanager.h \
     soundsource.h \
+    visualpoint.h \
     wavfilereader.h
 
 

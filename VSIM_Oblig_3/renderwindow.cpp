@@ -18,12 +18,15 @@
 #include "camera.h"
 #include "texture.h"
 #include "visualobject.h"
+#include "visualpoint.h"
 #include "soundmanager.h"
 #include "vector3d.h"
 #include "soundsource.h"
 #include "lighting.h"
 #include "pointlight.h"
 #include "mainwindow.h"
+#include "sun.h"
+#include "Bezier.h"
 #include "logger.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
@@ -148,6 +151,24 @@ void RenderWindow::init()
     mMap.insert(std::pair<std::string, VisualObject*>{"ball",
                   new objLoader("../VSIM_Oblig_3//objFiles/ball.obj", mShaders["phongshader"])});
 
+    //inserts the sun
+    mSun = new Sun("../VSIM_Oblig_3/objFiles/ball.obj", mShaders["phongshader"]);
+    mMap.insert(std::pair<std::string, VisualObject*>{"Sun", mSun});
+    mMap["Sun"]->SetPosition(QVector3D(0, 0, 0));
+    mMap["Sun"]->SetScale(QVector3D(5, 5, 5));
+
+    std::vector<QVector3D> controlPointsSun;
+    controlPointsSun.push_back(QVector3D(-30.f, 20.f, 0.f));
+    controlPointsSun.push_back(QVector3D(-20.f, 20.f, 0.f));
+    controlPointsSun.push_back(QVector3D(-10.f, 20.f, 0.f));
+    controlPointsSun.push_back(QVector3D(1.f, 20.f, 0.f));
+    controlPointsSun.push_back(QVector3D(10.f, 20.f, 0.f));
+    controlPointsSun.push_back(QVector3D(20.f, 20.f, 0.f));
+    controlPointsSun.push_back(QVector3D(30.f, 20.f, 0.f));
+
+    mBezierSun = new Bezier(controlPointsSun, mShaders["PlainShader"]);
+    mMap.insert(std::pair<std::string, VisualObject*>{"BezierCurveSun", mBezierSun});
+
 
     mMap["plane"]->SetPosition(QVector3D(0, -5, 0));
     mMap["plane"]->SetScale(QVector3D(10, 10, 10));
@@ -222,9 +243,40 @@ void RenderWindow::render()
     mCamera->perspective(90, static_cast<float>(width()) / static_cast<float>(height()), 0.1, 3000.0);
     mCamera->lookAt(camPos, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
+
+    for(int i = 0; i < 10; i++)
+           {
+               mMap["PointLight " + std::to_string(i)]->SetPosition(mSun->GetPosition());
+           }
+           //OPPG 3 Sun Bezier movement
+           if(mSun)
+           {
+               if(mSun->SunPatrolDir >=1)
+               {
+                   mSun->SunPatrol = false;
+               }
+               else if(mSun->SunPatrolDir <=0)
+               {
+                   mSun->SunPatrol = true;
+               }
+               //moves it back again:
+               if(mSun->SunPatrol)
+               {
+                   mSun->SunPatrolDir += 0.001f;
+               }
+               else
+               {
+                    mSun->SunPatrolDir -= 0.001f;
+               }
+               mSun->SetPosition(mBezierSun->EvaluateBezier(mSun->SunPatrolDir));
+
+                 }
+
     QVector3D ballPos = mMap["ball"]->GetPosition();
     Vector3D soundPos = mMap["ball"]->getPosition();
     //Vector3D postest = mMap["ball"]->getPosition();
+
+
 
 
 

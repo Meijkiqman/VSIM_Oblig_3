@@ -13,7 +13,10 @@ class Shader;
 class Camera;
 class VisualObject;
 class objLoader;
+class Sun;
+class Bezier;
 class SoundSource;
+class heightMap;
 class PointLight;
 class MainWindow;
 
@@ -46,6 +49,12 @@ private:
     std::unordered_map<std::string, VisualObject*> mMap;
     //lights in mMap
     std::unordered_map<std::string, PointLight*> mPointLightsMap;
+
+    heightMap* mHeightMap;
+
+    Sun* mSun;
+    Bezier* mBezierSun;
+
 
     //for spawning several lights WIP
     int mPointLights =0;

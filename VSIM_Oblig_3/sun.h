@@ -4,10 +4,10 @@
 
 #include "objloader.h"
 
-class sun : public objLoader
+class Sun : public objLoader
 {
 public:
-    sun(std::string fileName, Shader* shader);
+    Sun(std::string fileName, Shader* shader);
     bool SunPatrol = true;
     float SunPatrolDir = 0;
     float SunPos;
