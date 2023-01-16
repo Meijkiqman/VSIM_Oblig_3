@@ -51,6 +51,7 @@ OBJECTS_DIR   = debug
 ####### Files
 
 SOURCES       = ..\VSIM_Oblig_3\main.cpp \
+		..\VSIM_Oblig_3\bezier.cpp \
 		..\VSIM_Oblig_3\heightmap.cpp \
 		..\VSIM_Oblig_3\lighting.cpp \
 		..\VSIM_Oblig_3\logger.cpp \
@@ -59,6 +60,7 @@ SOURCES       = ..\VSIM_Oblig_3\main.cpp \
 		..\VSIM_Oblig_3\renderwindow.cpp \
 		..\VSIM_Oblig_3\shader.cpp \
 		..\VSIM_Oblig_3\camera.cpp \
+		..\VSIM_Oblig_3\sun.cpp \
 		..\VSIM_Oblig_3\texture.cpp \
 		..\VSIM_Oblig_3\vector3d.cpp \
 		..\VSIM_Oblig_3\vertex.cpp \
@@ -66,9 +68,11 @@ SOURCES       = ..\VSIM_Oblig_3\main.cpp \
 		..\VSIM_Oblig_3\objLoader.cpp \
 		..\VSIM_Oblig_3\soundsource.cpp \
 		..\VSIM_Oblig_3\soundmanager.cpp \
+		..\VSIM_Oblig_3\visualpoint.cpp \
 		..\VSIM_Oblig_3\wavfilereader.cpp debug\moc_mainwindow.cpp \
 		debug\moc_renderwindow.cpp
 OBJECTS       = debug\main.obj \
+		debug\bezier.obj \
 		debug\heightmap.obj \
 		debug\lighting.obj \
 		debug\logger.obj \
@@ -77,6 +81,7 @@ OBJECTS       = debug\main.obj \
 		debug\renderwindow.obj \
 		debug\shader.obj \
 		debug\camera.obj \
+		debug\sun.obj \
 		debug\texture.obj \
 		debug\vector3d.obj \
 		debug\vertex.obj \
@@ -84,6 +89,7 @@ OBJECTS       = debug\main.obj \
 		debug\objLoader.obj \
 		debug\soundsource.obj \
 		debug\soundmanager.obj \
+		debug\visualpoint.obj \
 		debug\wavfilereader.obj \
 		debug\moc_mainwindow.obj \
 		debug\moc_renderwindow.obj
@@ -93,7 +99,8 @@ DIST          = plainshader.frag \
 		textureshader.frag \
 		textureshsder.vert \
 		phongshader.frag \
-		phongshader.vert ..\VSIM_Oblig_3\heightmap.h \
+		phongshader.vert ..\VSIM_Oblig_3\bezier.h \
+		..\VSIM_Oblig_3\heightmap.h \
 		..\VSIM_Oblig_3\lighting.h \
 		..\VSIM_Oblig_3\logger.h \
 		..\VSIM_Oblig_3\mainwindow.h \
@@ -101,6 +108,7 @@ DIST          = plainshader.frag \
 		..\VSIM_Oblig_3\renderwindow.h \
 		..\VSIM_Oblig_3\shader.h \
 		..\VSIM_Oblig_3\camera.h \
+		..\VSIM_Oblig_3\sun.h \
 		..\VSIM_Oblig_3\texture.h \
 		..\VSIM_Oblig_3\vector3d.h \
 		..\VSIM_Oblig_3\vertex.h \
@@ -108,7 +116,9 @@ DIST          = plainshader.frag \
 		..\VSIM_Oblig_3\objLoader.h \
 		..\VSIM_Oblig_3\soundmanager.h \
 		..\VSIM_Oblig_3\soundsource.h \
+		..\VSIM_Oblig_3\visualpoint.h \
 		..\VSIM_Oblig_3\wavfilereader.h ..\VSIM_Oblig_3\main.cpp \
+		..\VSIM_Oblig_3\bezier.cpp \
 		..\VSIM_Oblig_3\heightmap.cpp \
 		..\VSIM_Oblig_3\lighting.cpp \
 		..\VSIM_Oblig_3\logger.cpp \
@@ -117,6 +127,7 @@ DIST          = plainshader.frag \
 		..\VSIM_Oblig_3\renderwindow.cpp \
 		..\VSIM_Oblig_3\shader.cpp \
 		..\VSIM_Oblig_3\camera.cpp \
+		..\VSIM_Oblig_3\sun.cpp \
 		..\VSIM_Oblig_3\texture.cpp \
 		..\VSIM_Oblig_3\vector3d.cpp \
 		..\VSIM_Oblig_3\vertex.cpp \
@@ -124,6 +135,7 @@ DIST          = plainshader.frag \
 		..\VSIM_Oblig_3\objLoader.cpp \
 		..\VSIM_Oblig_3\soundsource.cpp \
 		..\VSIM_Oblig_3\soundmanager.cpp \
+		..\VSIM_Oblig_3\visualpoint.cpp \
 		..\VSIM_Oblig_3\wavfilereader.cpp
 QMAKE_TARGET  = 3D-programmering
 DESTDIR        = debug\ #avoid trailing-slash linebreak
@@ -201,7 +213,7 @@ all: Makefile.Debug  debug\3D-programmering.exe
 
 debug\3D-programmering.exe: debug\OpenAL32.dll C:\Qt\6.3.0\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.3.0\msvc2019_64\lib\Qt6OpenGLd.lib C:\Qt\6.3.0\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.3.0\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.3.0\msvc2019_64\lib\Qt6EntryPointd.lib ui_mainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
-debug\main.obj debug\heightmap.obj debug\lighting.obj debug\logger.obj debug\mainwindow.obj debug\pointlight.obj debug\renderwindow.obj debug\shader.obj debug\camera.obj debug\texture.obj debug\vector3d.obj debug\vertex.obj debug\visualobject.obj debug\objLoader.obj debug\soundsource.obj debug\soundmanager.obj debug\wavfilereader.obj debug\moc_mainwindow.obj debug\moc_renderwindow.obj
+debug\main.obj debug\bezier.obj debug\heightmap.obj debug\lighting.obj debug\logger.obj debug\mainwindow.obj debug\pointlight.obj debug\renderwindow.obj debug\shader.obj debug\camera.obj debug\sun.obj debug\texture.obj debug\vector3d.obj debug\vertex.obj debug\visualobject.obj debug\objLoader.obj debug\soundsource.obj debug\soundmanager.obj debug\visualpoint.obj debug\wavfilereader.obj debug\moc_mainwindow.obj debug\moc_renderwindow.obj
 $(LIBS)
 <<
 
@@ -211,10 +223,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) 3D-programmering.zip $(SOURCES) $(DIST) ..\VSIM_Oblig_3\VSIM_Oblig_3.pro C:\Qt\6.3.0\msvc2019_64\mkspecs\features\spec_pre.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\windows-desktop.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\windows-vulkan.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\msvc-desktop.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\qconfig.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_ext_freetype.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_ext_libjpeg.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_ext_libpng.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_core.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_entrypoint_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_freetype_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_harfbuzz_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_help.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_jpeg_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_linguist.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_linguist_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_network.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_png_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmldom_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmllint_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_tools_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qt_functions.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qt_config.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\win32-msvc\qmake.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\6.3.0\msvc2019_64\mkspecs\features\exclusive_builds.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\msvc-version.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\toolchain.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\default_pre.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\default_pre.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\resolve_config.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\default_post.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\build_pass.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qml_debug.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\entrypoint.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\precompile_header.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\warn_on.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qt.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\resources_functions.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\resources.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\moc.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\opengl.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\uic.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qmake_use.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\file_copies.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\windows.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\testcase_targets.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\exceptions.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\yacc.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\lex.prf ..\VSIM_Oblig_3\VSIM_Oblig_3.pro C:\Qt\6.3.0\msvc2019_64\lib\Qt6Widgetsd.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6OpenGLd.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6Guid.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6Cored.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6EntryPointd.prl    C:\Qt\6.3.0\msvc2019_64\mkspecs\features\data\dummy.cpp ..\VSIM_Oblig_3\heightmap.h ..\VSIM_Oblig_3\lighting.h ..\VSIM_Oblig_3\logger.h ..\VSIM_Oblig_3\mainwindow.h ..\VSIM_Oblig_3\pointlight.h ..\VSIM_Oblig_3\renderwindow.h ..\VSIM_Oblig_3\shader.h ..\VSIM_Oblig_3\camera.h ..\VSIM_Oblig_3\texture.h ..\VSIM_Oblig_3\vector3d.h ..\VSIM_Oblig_3\vertex.h ..\VSIM_Oblig_3\visualobject.h ..\VSIM_Oblig_3\objLoader.h ..\VSIM_Oblig_3\soundmanager.h ..\VSIM_Oblig_3\soundsource.h ..\VSIM_Oblig_3\wavfilereader.h  ..\VSIM_Oblig_3\main.cpp ..\VSIM_Oblig_3\heightmap.cpp ..\VSIM_Oblig_3\lighting.cpp ..\VSIM_Oblig_3\logger.cpp ..\VSIM_Oblig_3\mainwindow.cpp ..\VSIM_Oblig_3\pointlight.cpp ..\VSIM_Oblig_3\renderwindow.cpp ..\VSIM_Oblig_3\shader.cpp ..\VSIM_Oblig_3\camera.cpp ..\VSIM_Oblig_3\texture.cpp ..\VSIM_Oblig_3\vector3d.cpp ..\VSIM_Oblig_3\vertex.cpp ..\VSIM_Oblig_3\visualobject.cpp ..\VSIM_Oblig_3\objLoader.cpp ..\VSIM_Oblig_3\soundsource.cpp ..\VSIM_Oblig_3\soundmanager.cpp ..\VSIM_Oblig_3\wavfilereader.cpp ..\VSIM_Oblig_3\mainwindow.ui    
+	$(ZIP) 3D-programmering.zip $(SOURCES) $(DIST) ..\VSIM_Oblig_3\VSIM_Oblig_3.pro C:\Qt\6.3.0\msvc2019_64\mkspecs\features\spec_pre.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\windows-desktop.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\windows-vulkan.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\msvc-desktop.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\qconfig.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_ext_freetype.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_ext_libjpeg.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_ext_libpng.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_core.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_entrypoint_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_freetype_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_harfbuzz_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_help.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_jpeg_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_linguist.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_linguist_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_network.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_png_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmldom_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmllint_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_tools_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qt_functions.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qt_config.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\win32-msvc\qmake.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\6.3.0\msvc2019_64\mkspecs\features\exclusive_builds.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\common\msvc-version.conf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\toolchain.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\default_pre.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\default_pre.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\resolve_config.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\default_post.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\build_pass.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qml_debug.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\entrypoint.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\precompile_header.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\warn_on.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qt.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\resources_functions.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\resources.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\moc.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\opengl.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\uic.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\qmake_use.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\file_copies.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\win32\windows.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\testcase_targets.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\exceptions.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\yacc.prf C:\Qt\6.3.0\msvc2019_64\mkspecs\features\lex.prf ..\VSIM_Oblig_3\VSIM_Oblig_3.pro C:\Qt\6.3.0\msvc2019_64\lib\Qt6Widgetsd.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6OpenGLd.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6Guid.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6Cored.prl C:\Qt\6.3.0\msvc2019_64\lib\Qt6EntryPointd.prl    C:\Qt\6.3.0\msvc2019_64\mkspecs\features\data\dummy.cpp ..\VSIM_Oblig_3\bezier.h ..\VSIM_Oblig_3\heightmap.h ..\VSIM_Oblig_3\lighting.h ..\VSIM_Oblig_3\logger.h ..\VSIM_Oblig_3\mainwindow.h ..\VSIM_Oblig_3\pointlight.h ..\VSIM_Oblig_3\renderwindow.h ..\VSIM_Oblig_3\shader.h ..\VSIM_Oblig_3\camera.h ..\VSIM_Oblig_3\sun.h ..\VSIM_Oblig_3\texture.h ..\VSIM_Oblig_3\vector3d.h ..\VSIM_Oblig_3\vertex.h ..\VSIM_Oblig_3\visualobject.h ..\VSIM_Oblig_3\objLoader.h ..\VSIM_Oblig_3\soundmanager.h ..\VSIM_Oblig_3\soundsource.h ..\VSIM_Oblig_3\visualpoint.h ..\VSIM_Oblig_3\wavfilereader.h  ..\VSIM_Oblig_3\main.cpp ..\VSIM_Oblig_3\bezier.cpp ..\VSIM_Oblig_3\heightmap.cpp ..\VSIM_Oblig_3\lighting.cpp ..\VSIM_Oblig_3\logger.cpp ..\VSIM_Oblig_3\mainwindow.cpp ..\VSIM_Oblig_3\pointlight.cpp ..\VSIM_Oblig_3\renderwindow.cpp ..\VSIM_Oblig_3\shader.cpp ..\VSIM_Oblig_3\camera.cpp ..\VSIM_Oblig_3\sun.cpp ..\VSIM_Oblig_3\texture.cpp ..\VSIM_Oblig_3\vector3d.cpp ..\VSIM_Oblig_3\vertex.cpp ..\VSIM_Oblig_3\visualobject.cpp ..\VSIM_Oblig_3\objLoader.cpp ..\VSIM_Oblig_3\soundsource.cpp ..\VSIM_Oblig_3\soundmanager.cpp ..\VSIM_Oblig_3\visualpoint.cpp ..\VSIM_Oblig_3\wavfilereader.cpp ..\VSIM_Oblig_3\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.obj debug\heightmap.obj debug\lighting.obj debug\logger.obj debug\mainwindow.obj debug\pointlight.obj debug\renderwindow.obj debug\shader.obj debug\camera.obj debug\texture.obj debug\vector3d.obj debug\vertex.obj debug\visualobject.obj debug\objLoader.obj debug\soundsource.obj debug\soundmanager.obj debug\wavfilereader.obj debug\moc_mainwindow.obj debug\moc_renderwindow.obj
+	-$(DEL_FILE) debug\main.obj debug\bezier.obj debug\heightmap.obj debug\lighting.obj debug\logger.obj debug\mainwindow.obj debug\pointlight.obj debug\renderwindow.obj debug\shader.obj debug\camera.obj debug\sun.obj debug\texture.obj debug\vector3d.obj debug\vertex.obj debug\visualobject.obj debug\objLoader.obj debug\soundsource.obj debug\soundmanager.obj debug\visualpoint.obj debug\wavfilereader.obj debug\moc_mainwindow.obj debug\moc_renderwindow.obj
 	-$(DEL_FILE) debug\3D-programmering.vc.pdb debug\3D-programmering.ilk debug\3D-programmering.idb
 
 distclean: clean 
@@ -705,7 +717,7 @@ debug\main.obj: ..\VSIM_Oblig_3\main.cpp ..\VSIM_Oblig_3\mainwindow.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlocale.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qguiapplication_platform.h
 
-debug\heightmap.obj: ..\VSIM_Oblig_3\heightmap.cpp ..\VSIM_Oblig_3\heightmap.h \
+debug\bezier.obj: ..\VSIM_Oblig_3\bezier.cpp ..\VSIM_Oblig_3\bezier.h \
 		..\VSIM_Oblig_3\visualobject.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
@@ -824,208 +836,131 @@ debug\heightmap.obj: ..\VSIM_Oblig_3\heightmap.cpp ..\VSIM_Oblig_3\heightmap.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
 		..\VSIM_Oblig_3\vertex.h \
 		..\VSIM_Oblig_3\vector3d.h \
-		..\VSIM_Oblig_3\glm\glm.hpp \
-		..\VSIM_Oblig_3\glm\detail\_fixes.hpp \
-		..\VSIM_Oblig_3\glm\detail\setup.hpp \
-		..\VSIM_Oblig_3\glm\simd\platform.h \
-		..\VSIM_Oblig_3\glm\simd\neon.h \
-		..\VSIM_Oblig_3\glm\fwd.hpp \
-		..\VSIM_Oblig_3\glm\detail\qualifier.hpp \
-		..\VSIM_Oblig_3\glm\vec2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle_func.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_int_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_uint_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_vec4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4_sized.hpp \
-		..\VSIM_Oblig_3\glm\mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.inl \
-		..\VSIM_Oblig_3\glm\matrix.hpp \
-		..\VSIM_Oblig_3\glm\mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_matrix.inl \
-		..\VSIM_Oblig_3\glm\geometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_geometric.inl \
-		..\VSIM_Oblig_3\glm\exponential.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.inl \
-		..\VSIM_Oblig_3\glm\detail\func_exponential.inl \
-		..\VSIM_Oblig_3\glm\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational_simd.inl \
-		..\VSIM_Oblig_3\glm\detail\_vectorize.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_exponential_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\exponential.h \
-		..\VSIM_Oblig_3\glm\common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\common.h \
-		..\VSIM_Oblig_3\glm\detail\func_geometric_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\geometric.h \
-		..\VSIM_Oblig_3\glm\detail\func_matrix_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\matrix.h \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric_simd.inl \
-		..\VSIM_Oblig_3\glm\packing.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_packing.inl \
-		..\VSIM_Oblig_3\glm\detail\type_half.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_half.inl \
-		..\VSIM_Oblig_3\glm\detail\func_packing_simd.inl \
-		..\VSIM_Oblig_3\glm\integer.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_integer.inl \
-		..\VSIM_Oblig_3\glm\detail\func_integer_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\integer.h \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.hpp \
-		..\VSIM_Oblig_3\glm\gtc\constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.inl \
-		..\VSIM_Oblig_3\glm\gtc\constants.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.hpp \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_float.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_quat.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.inl \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.hpp \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion_simd.inl \
-		..\VSIM_Oblig_3\glm\gtc\vec1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1_sized.hpp \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.inl
+		..\VSIM_Oblig_3\visualpoint.h \
+		..\VSIM_Oblig_3\visualObject.h
+
+debug\heightmap.obj: ..\VSIM_Oblig_3\heightmap.cpp ..\VSIM_Oblig_3\heightmap.h \
+		..\VSIM_Oblig_3\visualObject.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qconfig.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtcore-config.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtcoreexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsystemdetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qprocessordetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompilerdetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtypeinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainerfwd.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsysinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlogging.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qflags.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompare_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbasicatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qgenericatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qglobalstatic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnumeric.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qversiontagging.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtguiglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtgui-config.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtguiexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLVersionProfile \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglversionprofile.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QSurfaceFormat \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qsurfaceformat.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qpair.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobjectdefs.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnamespace.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtmetamacros.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobjectdefs_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QPair \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qhashfunctions.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstring.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qchar.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearray.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qrefcount.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydata.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydatapointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydataops.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainertools_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearrayalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearrayview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringliteral.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qanystringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qutf8stringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringtokenizer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringbuilder.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLVersionFunctions \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglversionfunctions.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopengl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qt_windows.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopengles2ext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglcontext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QObject \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobject.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiterator.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearraylist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringlist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringmatcher.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcoreevent.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qscopedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmetatype.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompare.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qvarlengtharray.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qscopeguard.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qdatastream.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiodevicebase.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiterable.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmetacontainer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainerinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtaggedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmath.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobject_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbindingstorage.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QScopedPointer \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnativeinterface.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qvariant.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmap.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qshareddata.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qshareddata_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qhash.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qdebug.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtextstream.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringconverter.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qset.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontiguouscache.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsharedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglcontext_platform.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qwindowdefs.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qwindowdefs_win.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QMatrix4x4 \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qmatrix4x4.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector3d.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvectornd.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qpoint.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qrect.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmargins.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsize.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector4d.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qquaternion.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
+		..\VSIM_Oblig_3\vertex.h \
+		..\VSIM_Oblig_3\vector3d.h \
+		..\VSIM_Oblig_3\stb_image\stb_image.h \
+		..\VSIM_Oblig_3\shader.h \
+		..\VSIM_Oblig_3\texture.h
 
 debug\lighting.obj: ..\VSIM_Oblig_3\lighting.cpp ..\VSIM_Oblig_3\shader.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
@@ -1147,209 +1082,7 @@ debug\lighting.obj: ..\VSIM_Oblig_3\lighting.cpp ..\VSIM_Oblig_3\shader.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsize.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector4d.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qquaternion.h \
-		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
-		..\VSIM_Oblig_3\glm\glm.hpp \
-		..\VSIM_Oblig_3\glm\detail\_fixes.hpp \
-		..\VSIM_Oblig_3\glm\detail\setup.hpp \
-		..\VSIM_Oblig_3\glm\simd\platform.h \
-		..\VSIM_Oblig_3\glm\simd\neon.h \
-		..\VSIM_Oblig_3\glm\fwd.hpp \
-		..\VSIM_Oblig_3\glm\detail\qualifier.hpp \
-		..\VSIM_Oblig_3\glm\vec2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle_func.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_int_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_uint_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_vec4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4_sized.hpp \
-		..\VSIM_Oblig_3\glm\mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.inl \
-		..\VSIM_Oblig_3\glm\matrix.hpp \
-		..\VSIM_Oblig_3\glm\mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_matrix.inl \
-		..\VSIM_Oblig_3\glm\geometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_geometric.inl \
-		..\VSIM_Oblig_3\glm\exponential.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.inl \
-		..\VSIM_Oblig_3\glm\detail\func_exponential.inl \
-		..\VSIM_Oblig_3\glm\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational_simd.inl \
-		..\VSIM_Oblig_3\glm\detail\_vectorize.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_exponential_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\exponential.h \
-		..\VSIM_Oblig_3\glm\common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\common.h \
-		..\VSIM_Oblig_3\glm\detail\func_geometric_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\geometric.h \
-		..\VSIM_Oblig_3\glm\detail\func_matrix_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\matrix.h \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric_simd.inl \
-		..\VSIM_Oblig_3\glm\packing.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_packing.inl \
-		..\VSIM_Oblig_3\glm\detail\type_half.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_half.inl \
-		..\VSIM_Oblig_3\glm\detail\func_packing_simd.inl \
-		..\VSIM_Oblig_3\glm\integer.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_integer.inl \
-		..\VSIM_Oblig_3\glm\detail\func_integer_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\integer.h \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.hpp \
-		..\VSIM_Oblig_3\glm\gtc\constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.inl \
-		..\VSIM_Oblig_3\glm\gtc\constants.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.hpp \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_float.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_quat.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.inl \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.hpp \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion_simd.inl \
-		..\VSIM_Oblig_3\glm\gtc\vec1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1_sized.hpp \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.inl
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h
 
 debug\logger.obj: ..\VSIM_Oblig_3\logger.cpp ..\VSIM_Oblig_3\logger.h \
 		..\VSIM_Oblig_3\mainwindow.h \
@@ -1889,208 +1622,6 @@ debug\pointlight.obj: ..\VSIM_Oblig_3\pointlight.cpp ..\VSIM_Oblig_3\pointlight.
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qquaternion.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
 		..\VSIM_Oblig_3\vertex.h \
-		..\VSIM_Oblig_3\glm\glm.hpp \
-		..\VSIM_Oblig_3\glm\detail\_fixes.hpp \
-		..\VSIM_Oblig_3\glm\detail\setup.hpp \
-		..\VSIM_Oblig_3\glm\simd\platform.h \
-		..\VSIM_Oblig_3\glm\simd\neon.h \
-		..\VSIM_Oblig_3\glm\fwd.hpp \
-		..\VSIM_Oblig_3\glm\detail\qualifier.hpp \
-		..\VSIM_Oblig_3\glm\vec2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle_func.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_int_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_uint_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_vec4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4_sized.hpp \
-		..\VSIM_Oblig_3\glm\mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.inl \
-		..\VSIM_Oblig_3\glm\matrix.hpp \
-		..\VSIM_Oblig_3\glm\mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_matrix.inl \
-		..\VSIM_Oblig_3\glm\geometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_geometric.inl \
-		..\VSIM_Oblig_3\glm\exponential.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.inl \
-		..\VSIM_Oblig_3\glm\detail\func_exponential.inl \
-		..\VSIM_Oblig_3\glm\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational_simd.inl \
-		..\VSIM_Oblig_3\glm\detail\_vectorize.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_exponential_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\exponential.h \
-		..\VSIM_Oblig_3\glm\common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\common.h \
-		..\VSIM_Oblig_3\glm\detail\func_geometric_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\geometric.h \
-		..\VSIM_Oblig_3\glm\detail\func_matrix_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\matrix.h \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric_simd.inl \
-		..\VSIM_Oblig_3\glm\packing.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_packing.inl \
-		..\VSIM_Oblig_3\glm\detail\type_half.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_half.inl \
-		..\VSIM_Oblig_3\glm\detail\func_packing_simd.inl \
-		..\VSIM_Oblig_3\glm\integer.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_integer.inl \
-		..\VSIM_Oblig_3\glm\detail\func_integer_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\integer.h \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.hpp \
-		..\VSIM_Oblig_3\glm\gtc\constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.inl \
-		..\VSIM_Oblig_3\glm\gtc\constants.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.hpp \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_float.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_quat.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.inl \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.hpp \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion_simd.inl \
-		..\VSIM_Oblig_3\glm\gtc\vec1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1_sized.hpp \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.inl \
 		..\VSIM_Oblig_3\shader.h
 
 debug\renderwindow.obj: ..\VSIM_Oblig_3\renderwindow.cpp ..\VSIM_Oblig_3\renderwindow.h \
@@ -2271,213 +1802,13 @@ debug\renderwindow.obj: ..\VSIM_Oblig_3\renderwindow.cpp ..\VSIM_Oblig_3\renderw
 		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QDebug \
 		..\VSIM_Oblig_3\shader.h \
 		..\VSIM_Oblig_3\objLoader.h \
-		..\VSIM_Oblig_3\visualobject.h \
+		..\VSIM_Oblig_3\visualObject.h \
 		..\VSIM_Oblig_3\vertex.h \
 		..\VSIM_Oblig_3\vector3d.h \
-		..\VSIM_Oblig_3\glm\glm.hpp \
-		..\VSIM_Oblig_3\glm\detail\_fixes.hpp \
-		..\VSIM_Oblig_3\glm\detail\setup.hpp \
-		..\VSIM_Oblig_3\glm\simd\platform.h \
-		..\VSIM_Oblig_3\glm\simd\neon.h \
-		..\VSIM_Oblig_3\glm\fwd.hpp \
-		..\VSIM_Oblig_3\glm\detail\qualifier.hpp \
-		..\VSIM_Oblig_3\glm\vec2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle_func.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_int_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_uint_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_vec4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4_sized.hpp \
-		..\VSIM_Oblig_3\glm\mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.inl \
-		..\VSIM_Oblig_3\glm\matrix.hpp \
-		..\VSIM_Oblig_3\glm\mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_matrix.inl \
-		..\VSIM_Oblig_3\glm\geometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_geometric.inl \
-		..\VSIM_Oblig_3\glm\exponential.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.inl \
-		..\VSIM_Oblig_3\glm\detail\func_exponential.inl \
-		..\VSIM_Oblig_3\glm\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational_simd.inl \
-		..\VSIM_Oblig_3\glm\detail\_vectorize.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_exponential_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\exponential.h \
-		..\VSIM_Oblig_3\glm\common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\common.h \
-		..\VSIM_Oblig_3\glm\detail\func_geometric_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\geometric.h \
-		..\VSIM_Oblig_3\glm\detail\func_matrix_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\matrix.h \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric_simd.inl \
-		..\VSIM_Oblig_3\glm\packing.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_packing.inl \
-		..\VSIM_Oblig_3\glm\detail\type_half.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_half.inl \
-		..\VSIM_Oblig_3\glm\detail\func_packing_simd.inl \
-		..\VSIM_Oblig_3\glm\integer.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_integer.inl \
-		..\VSIM_Oblig_3\glm\detail\func_integer_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\integer.h \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.hpp \
-		..\VSIM_Oblig_3\glm\gtc\constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.inl \
-		..\VSIM_Oblig_3\glm\gtc\constants.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.hpp \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_float.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_quat.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.inl \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.hpp \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion_simd.inl \
-		..\VSIM_Oblig_3\glm\gtc\vec1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1_sized.hpp \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.inl \
 		..\VSIM_Oblig_3\camera.h \
 		..\VSIM_Oblig_3\texture.h \
+		..\VSIM_Oblig_3\visualobject.h \
+		..\VSIM_Oblig_3\visualpoint.h \
 		..\VSIM_Oblig_3\soundmanager.h \
 		..\VSIM_Oblig_3\openal\include\AL\al.h \
 		..\VSIM_Oblig_3\openal\include\AL\alc.h \
@@ -2485,12 +1816,14 @@ debug\renderwindow.obj: ..\VSIM_Oblig_3\renderwindow.cpp ..\VSIM_Oblig_3\renderw
 		..\VSIM_Oblig_3\OpenAL\include\AL\alc.h \
 		..\VSIM_Oblig_3\soundsource.h \
 		..\VSIM_Oblig_3\lighting.h \
-		..\VSIM_Oblig_3\visualObject.h \
 		..\VSIM_Oblig_3\pointlight.h \
 		..\VSIM_Oblig_3\mainwindow.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtWidgets\QMainWindow \
 		C:\Qt\6.3.0\msvc2019_64\include\QtWidgets\qmainwindow.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtWidgets\qtabwidget.h \
+		..\VSIM_Oblig_3\sun.h \
+		..\VSIM_Oblig_3\objloader.h \
+		..\VSIM_Oblig_3\Bezier.h \
 		..\VSIM_Oblig_3\logger.h
 
 debug\shader.obj: ..\VSIM_Oblig_3\shader.cpp ..\VSIM_Oblig_3\shader.h \
@@ -2728,6 +2061,127 @@ debug\camera.obj: ..\VSIM_Oblig_3\camera.cpp ..\VSIM_Oblig_3\camera.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QVector3D
 
+debug\sun.obj: ..\VSIM_Oblig_3\sun.cpp ..\VSIM_Oblig_3\sun.h \
+		..\VSIM_Oblig_3\objloader.h \
+		..\VSIM_Oblig_3\visualObject.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qconfig.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtcore-config.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtcoreexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsystemdetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qprocessordetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompilerdetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtypeinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainerfwd.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsysinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlogging.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qflags.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompare_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbasicatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qgenericatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qglobalstatic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnumeric.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qversiontagging.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtguiglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtgui-config.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtguiexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLVersionProfile \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglversionprofile.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QSurfaceFormat \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qsurfaceformat.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qpair.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobjectdefs.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnamespace.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtmetamacros.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobjectdefs_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QPair \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qhashfunctions.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstring.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qchar.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearray.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qrefcount.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydata.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydatapointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydataops.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainertools_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearrayalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearrayview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringliteral.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qanystringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qutf8stringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringtokenizer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringbuilder.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLVersionFunctions \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglversionfunctions.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopengl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qt_windows.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopengles2ext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglcontext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QObject \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobject.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiterator.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearraylist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringlist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringmatcher.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcoreevent.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qscopedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmetatype.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompare.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qvarlengtharray.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qscopeguard.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qdatastream.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiodevicebase.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiterable.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmetacontainer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainerinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtaggedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmath.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobject_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbindingstorage.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QScopedPointer \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnativeinterface.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qvariant.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmap.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qshareddata.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qshareddata_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qhash.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qdebug.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtextstream.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringconverter.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qset.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontiguouscache.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsharedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglcontext_platform.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qwindowdefs.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qwindowdefs_win.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QMatrix4x4 \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qmatrix4x4.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector3d.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvectornd.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qpoint.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qrect.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmargins.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsize.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector4d.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qquaternion.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
+		..\VSIM_Oblig_3\vertex.h \
+		..\VSIM_Oblig_3\vector3d.h
+
 debug\texture.obj: ..\VSIM_Oblig_3\texture.cpp ..\VSIM_Oblig_3\texture.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
@@ -2840,7 +2294,7 @@ debug\vector3d.obj: ..\VSIM_Oblig_3\vector3d.cpp ..\VSIM_Oblig_3\Vector3D.h
 debug\vertex.obj: ..\VSIM_Oblig_3\vertex.cpp ..\VSIM_Oblig_3\vertex.h \
 		..\VSIM_Oblig_3\vector3d.h
 
-debug\visualobject.obj: ..\VSIM_Oblig_3\visualobject.cpp ..\VSIM_Oblig_3\visualobject.h \
+debug\visualobject.obj: ..\VSIM_Oblig_3\visualobject.cpp ..\VSIM_Oblig_3\visualObject.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglglobal.h \
@@ -2958,213 +2412,11 @@ debug\visualobject.obj: ..\VSIM_Oblig_3\visualobject.cpp ..\VSIM_Oblig_3\visualo
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
 		..\VSIM_Oblig_3\vertex.h \
 		..\VSIM_Oblig_3\vector3d.h \
-		..\VSIM_Oblig_3\glm\glm.hpp \
-		..\VSIM_Oblig_3\glm\detail\_fixes.hpp \
-		..\VSIM_Oblig_3\glm\detail\setup.hpp \
-		..\VSIM_Oblig_3\glm\simd\platform.h \
-		..\VSIM_Oblig_3\glm\simd\neon.h \
-		..\VSIM_Oblig_3\glm\fwd.hpp \
-		..\VSIM_Oblig_3\glm\detail\qualifier.hpp \
-		..\VSIM_Oblig_3\glm\vec2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle_func.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_int_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_uint_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_vec4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4_sized.hpp \
-		..\VSIM_Oblig_3\glm\mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.inl \
-		..\VSIM_Oblig_3\glm\matrix.hpp \
-		..\VSIM_Oblig_3\glm\mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_matrix.inl \
-		..\VSIM_Oblig_3\glm\geometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_geometric.inl \
-		..\VSIM_Oblig_3\glm\exponential.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.inl \
-		..\VSIM_Oblig_3\glm\detail\func_exponential.inl \
-		..\VSIM_Oblig_3\glm\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational_simd.inl \
-		..\VSIM_Oblig_3\glm\detail\_vectorize.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_exponential_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\exponential.h \
-		..\VSIM_Oblig_3\glm\common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\common.h \
-		..\VSIM_Oblig_3\glm\detail\func_geometric_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\geometric.h \
-		..\VSIM_Oblig_3\glm\detail\func_matrix_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\matrix.h \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric_simd.inl \
-		..\VSIM_Oblig_3\glm\packing.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_packing.inl \
-		..\VSIM_Oblig_3\glm\detail\type_half.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_half.inl \
-		..\VSIM_Oblig_3\glm\detail\func_packing_simd.inl \
-		..\VSIM_Oblig_3\glm\integer.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_integer.inl \
-		..\VSIM_Oblig_3\glm\detail\func_integer_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\integer.h \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.hpp \
-		..\VSIM_Oblig_3\glm\gtc\constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.inl \
-		..\VSIM_Oblig_3\glm\gtc\constants.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.hpp \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_float.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_quat.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.inl \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.hpp \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion_simd.inl \
-		..\VSIM_Oblig_3\glm\gtc\vec1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1_sized.hpp \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.inl \
 		..\VSIM_Oblig_3\shader.h \
 		..\VSIM_Oblig_3\texture.h
 
 debug\objLoader.obj: ..\VSIM_Oblig_3\objLoader.cpp ..\VSIM_Oblig_3\objLoader.h \
-		..\VSIM_Oblig_3\visualobject.h \
+		..\VSIM_Oblig_3\visualObject.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglglobal.h \
@@ -3282,208 +2534,6 @@ debug\objLoader.obj: ..\VSIM_Oblig_3\objLoader.cpp ..\VSIM_Oblig_3\objLoader.h \
 		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
 		..\VSIM_Oblig_3\vertex.h \
 		..\VSIM_Oblig_3\vector3d.h \
-		..\VSIM_Oblig_3\glm\glm.hpp \
-		..\VSIM_Oblig_3\glm\detail\_fixes.hpp \
-		..\VSIM_Oblig_3\glm\detail\setup.hpp \
-		..\VSIM_Oblig_3\glm\simd\platform.h \
-		..\VSIM_Oblig_3\glm\simd\neon.h \
-		..\VSIM_Oblig_3\glm\fwd.hpp \
-		..\VSIM_Oblig_3\glm\detail\qualifier.hpp \
-		..\VSIM_Oblig_3\glm\vec2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle.hpp \
-		..\VSIM_Oblig_3\glm\detail\_swizzle_func.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec2.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_int_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint2_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_uint_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec3.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int3_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint3_sized.hpp \
-		..\VSIM_Oblig_3\glm\vec4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_vec4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\vector_bool4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int4_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint4_sized.hpp \
-		..\VSIM_Oblig_3\glm\mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x2.inl \
-		..\VSIM_Oblig_3\glm\matrix.hpp \
-		..\VSIM_Oblig_3\glm\mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat2x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat3x4.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float3x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x2.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x3.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x3_precision.hpp \
-		..\VSIM_Oblig_3\glm\mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4.inl \
-		..\VSIM_Oblig_3\glm\detail\type_mat4x4_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_double4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float4x4_precision.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_matrix.inl \
-		..\VSIM_Oblig_3\glm\geometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_geometric.inl \
-		..\VSIM_Oblig_3\glm\exponential.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_vec1.inl \
-		..\VSIM_Oblig_3\glm\detail\func_exponential.inl \
-		..\VSIM_Oblig_3\glm\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\func_vector_relational_simd.inl \
-		..\VSIM_Oblig_3\glm\detail\_vectorize.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_exponential_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\exponential.h \
-		..\VSIM_Oblig_3\glm\common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common.inl \
-		..\VSIM_Oblig_3\glm\detail\compute_common.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_common_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\common.h \
-		..\VSIM_Oblig_3\glm\detail\func_geometric_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\geometric.h \
-		..\VSIM_Oblig_3\glm\detail\func_matrix_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\matrix.h \
-		..\VSIM_Oblig_3\glm\ext\matrix_double2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_float2x2_precision.hpp \
-		..\VSIM_Oblig_3\glm\trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\detail\func_trigonometric_simd.inl \
-		..\VSIM_Oblig_3\glm\packing.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_packing.inl \
-		..\VSIM_Oblig_3\glm\detail\type_half.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_half.inl \
-		..\VSIM_Oblig_3\glm\detail\func_packing_simd.inl \
-		..\VSIM_Oblig_3\glm\integer.hpp \
-		..\VSIM_Oblig_3\glm\detail\func_integer.inl \
-		..\VSIM_Oblig_3\glm\detail\func_integer_simd.inl \
-		..\VSIM_Oblig_3\glm\simd\integer.h \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.hpp \
-		..\VSIM_Oblig_3\glm\gtc\constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.hpp \
-		..\VSIM_Oblig_3\glm\ext\scalar_constants.inl \
-		..\VSIM_Oblig_3\glm\gtc\constants.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_projection.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_clip_space.inl \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\matrix_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.hpp \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_float.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_geometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_common_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float.hpp \
-		..\VSIM_Oblig_3\glm\detail\type_quat.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_relational.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat.inl \
-		..\VSIM_Oblig_3\glm\detail\type_quat_simd.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_float_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_double_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_trigonometric.inl \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.hpp \
-		..\VSIM_Oblig_3\glm\ext\quaternion_transform.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion.inl \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.hpp \
-		..\VSIM_Oblig_3\glm\gtc\epsilon.inl \
-		..\VSIM_Oblig_3\glm\gtc\quaternion_simd.inl \
-		..\VSIM_Oblig_3\glm\gtc\vec1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_bool1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_float1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_double1_precision.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_int1_sized.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1.hpp \
-		..\VSIM_Oblig_3\glm\ext\vector_uint1_sized.hpp \
-		..\VSIM_Oblig_3\glm\gtc\type_ptr.inl \
 		..\VSIM_Oblig_3\shader.h \
 		..\VSIM_Oblig_3\texture.h
 
@@ -3503,6 +2553,126 @@ debug\soundmanager.obj: ..\VSIM_Oblig_3\soundmanager.cpp ..\VSIM_Oblig_3\soundma
 		..\VSIM_Oblig_3\soundsource.h \
 		..\VSIM_Oblig_3\vector3d.h \
 		..\VSIM_Oblig_3\wavfilereader.h
+
+debug\visualpoint.obj: ..\VSIM_Oblig_3\visualpoint.cpp ..\VSIM_Oblig_3\visualpoint.h \
+		..\VSIM_Oblig_3\visualObject.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLFunctions_4_1_Core \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglfunctions_4_1_core.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qconfig-bootstrapped.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qconfig.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtcore-config.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtcoreexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsystemdetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qprocessordetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompilerdetection.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtypeinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainerfwd.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsysinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlogging.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qflags.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompare_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbasicatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qgenericatomic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qglobalstatic.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnumeric.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qversiontagging.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtguiglobal.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtgui-config.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qtguiexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qtopenglexports.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLVersionProfile \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglversionprofile.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QSurfaceFormat \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qsurfaceformat.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qpair.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobjectdefs.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnamespace.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtmetamacros.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobjectdefs_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QPair \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qhashfunctions.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstring.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qchar.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearray.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qrefcount.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydata.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydatapointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qarraydataops.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainertools_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearrayalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearrayview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringliteral.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qanystringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qutf8stringview.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringtokenizer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringbuilder.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\QOpenGLVersionFunctions \
+		C:\Qt\6.3.0\msvc2019_64\include\QtOpenGL\qopenglversionfunctions.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopengl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qt_windows.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopengles2ext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglcontext.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QObject \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobject.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qlist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiterator.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbytearraylist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringlist.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qalgorithms.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringmatcher.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcoreevent.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qscopedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmetatype.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcompare.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qvarlengtharray.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qscopeguard.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qdatastream.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiodevicebase.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qiterable.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmetacontainer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontainerinfo.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtaggedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmath.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qobject_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qbindingstorage.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\QScopedPointer \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qnativeinterface.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qvariant.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmap.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qshareddata.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qshareddata_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qhash.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qdebug.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qtextstream.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qstringconverter.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qset.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qcontiguouscache.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsharedpointer.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qopenglcontext_platform.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qwindowdefs.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qwindowdefs_win.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\QMatrix4x4 \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qmatrix4x4.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector3d.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvectornd.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qpoint.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qrect.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qmargins.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtCore\qsize.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qvector4d.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qquaternion.h \
+		C:\Qt\6.3.0\msvc2019_64\include\QtGui\qgenericmatrix.h \
+		..\VSIM_Oblig_3\vertex.h \
+		..\VSIM_Oblig_3\vector3d.h
 
 debug\wavfilereader.obj: ..\VSIM_Oblig_3\wavfilereader.cpp ..\VSIM_Oblig_3\wavfilereader.h
 
