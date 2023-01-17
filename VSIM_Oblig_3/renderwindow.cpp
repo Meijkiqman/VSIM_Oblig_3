@@ -151,11 +151,17 @@ void RenderWindow::init()
     mMap.insert(std::pair<std::string, VisualObject*>{"ball",
                   new objLoader("../VSIM_Oblig_3//objFiles/ball.obj", mShaders["phongshader"])});
 
+
+    //SUNSTuff
+    {
+
+
     //inserts the sun
     mSun = new Sun("../VSIM_Oblig_3/objFiles/ball.obj", mShaders["phongshader"]);
     mMap.insert(std::pair<std::string, VisualObject*>{"Sun", mSun});
     mMap["Sun"]->SetPosition(QVector3D(0, 0, 0));
     mMap["Sun"]->SetScale(QVector3D(5, 5, 5));
+
 
     std::vector<QVector3D> controlPointsSun;
     controlPointsSun.push_back(QVector3D(-30.f, 20.f, 0.f));
@@ -168,7 +174,7 @@ void RenderWindow::init()
 
     mBezierSun = new Bezier(controlPointsSun, mShaders["PlainShader"]);
     mMap.insert(std::pair<std::string, VisualObject*>{"BezierCurveSun", mBezierSun});
-
+   }
 
     mMap["plane"]->SetPosition(QVector3D(0, -5, 0));
     mMap["plane"]->SetScale(QVector3D(10, 10, 10));

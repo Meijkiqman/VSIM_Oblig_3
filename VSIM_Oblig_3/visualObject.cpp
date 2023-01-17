@@ -1,4 +1,4 @@
-#include "visualObject.h"
+#include "visualobject.h"
 #include "vertex.h"
 #include "shader.h"
 #include "texture.h"
@@ -23,7 +23,8 @@ VisualObject::~VisualObject() {
      glDeleteBuffers( 1, &mVBO );*/
 }
 
-void VisualObject::init() {
+void VisualObject::init()
+{
     initializeOpenGLFunctions();
     //Get the model matrix from shader
     mMatrixUniform = glGetUniformLocation(mShader->getProgram(), "mMatrix");

@@ -7,6 +7,7 @@ TARGET      = 3D-programmering
 
 
 SOURCES += main.cpp \
+    TriangleSurface.cpp \
     bezier.cpp \
     heightmap.cpp \
     lighting.cpp \
@@ -29,6 +30,7 @@ SOURCES += main.cpp \
 
 
 HEADERS += \
+    TriangleSurface.h \
     bezier.h \
     heightmap.h \
     lighting.h \

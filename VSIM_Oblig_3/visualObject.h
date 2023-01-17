@@ -21,6 +21,7 @@ public:
 	VisualObject(Shader* shader, Texture* texture);
 	~VisualObject();
 	virtual void init();
+
 	virtual void draw();
 
 	std::pair<float, float> getPosition2D();
