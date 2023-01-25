@@ -19,6 +19,7 @@ class SoundSource;
 class heightMap;
 class PointLight;
 class MainWindow;
+class TriangleSurface;
 
 /// This inherits from QWindow to get access to the Qt functionality and
 // OpenGL surface.
@@ -69,6 +70,9 @@ private:
    //primitives
     objLoader* mCube;
     objLoader* mPlane;
+
+    //oblig 1 - matte
+
 
     //Some sounds...
     SoundSource* mExplosionSound{nullptr};

@@ -15,10 +15,9 @@ TriangleSurface::~TriangleSurface()
 
 void TriangleSurface::init()
 {
-
     initializeOpenGLFunctions();
     //Get the model matrix from shader
-    mMatrixUniform = glGetUniformLocation(mShader->getProgram(), "mMatrix");
+    //mMatrixUniform = glGetUniformLocation(mShader->getProgram(), "mMatrix");
     //Vertex array object-VAO
     glGenVertexArrays(1, &mVAO);
     glBindVertexArray(mVAO);

@@ -27,6 +27,7 @@
 #include "mainwindow.h"
 #include "sun.h"
 #include "Bezier.h"
+#include "TriangleSurface.h"
 #include "logger.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
@@ -140,6 +141,11 @@ void RenderWindow::init()
     //creates camera
     mCamera = new Camera();
 
+
+
+    //oblig 1 matte
+    mMap.insert(std::pair<std::string, VisualObject*>{"TriangleSurface",
+                  new TriangleSurface()});
 
     //mMap insert of primitve objects:
     mMap.insert(std::pair<std::string, VisualObject*>{"plane",
