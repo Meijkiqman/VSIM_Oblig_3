@@ -144,8 +144,8 @@ void RenderWindow::init()
 
 
     //oblig 1 matte
-    mMap.insert(std::pair<std::string, VisualObject*>{"TriangleSurface",
-                  new TriangleSurface()});
+   // mMap.insert(std::pair<std::string, VisualObject*>{"TriangleSurface",
+   //               new TriangleSurface()});
 
     //mMap insert of primitve objects:
     mMap.insert(std::pair<std::string, VisualObject*>{"plane",
