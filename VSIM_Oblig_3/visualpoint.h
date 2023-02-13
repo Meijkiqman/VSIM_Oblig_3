@@ -4,6 +4,8 @@
 class VisualPoint : public VisualObject
 {
 public:
+    VisualPoint();
+    VisualPoint(const std::vector<Vertex>& v);
     VisualPoint(Shader* shader);
     VisualPoint(const std::vector<Vertex>& v, Shader* shader);
     ~VisualPoint() override;

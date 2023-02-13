@@ -27,7 +27,8 @@
 #include "mainwindow.h"
 #include "sun.h"
 #include "Bezier.h"
-#include "TriangleSurface.h"
+#include "visualpoint.h"
+#include "quadtraticpolynomial.h"
 #include "logger.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
@@ -52,8 +53,27 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
    // mMVPmatrix = new QMatrix4x4{};
    // mMVPmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
 
+
+
+
     //Make the gameloop timer:
     mRenderTimer = new QTimer(this);
+
+
+    //Matte oblig 2 4.4.4
+    mMap.insert(std::pair<std::string, VisualObject*>{"QuadtraticPolynomial", new QuadtraticPolynomial(0.04565317f, -0.1114739f, 0.9789611f, 0.1f)});
+    std::vector<Vertex> points;
+    points.push_back(Vertex{ 3, 10, 0 });
+    points.push_back(Vertex{ 1, -5, 0 });
+    points.push_back(Vertex{ -6.9, 4.2, 0 });
+    points.push_back(Vertex{ 3.7, -8.2, 0 });
+    points.push_back(Vertex{ 2, 5, 0 });
+    points.push_back(Vertex{ 7, -2.6, 0 });
+    points.push_back(Vertex{ -3.3, 1.7, 0 });
+    for (auto i = 0; i < points.size(); i++)
+    {
+        mMap.insert(std::pair<std::string, VisualObject*>{ std::to_string(i), new VisualPoint(points)});
+    }
 }
 
 RenderWindow::~RenderWindow()

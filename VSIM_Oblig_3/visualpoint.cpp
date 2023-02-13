@@ -1,10 +1,14 @@
 #include "visualpoint.h"
 
+
 VisualPoint::VisualPoint(Shader* shader) : VisualObject(shader)
 {
 
 }
-
+VisualPoint::VisualPoint(const std::vector<Vertex>& v)
+{
+    mVertices = v;
+}
 VisualPoint::VisualPoint(const std::vector<Vertex>& v, Shader *shader)  : VisualObject(shader)
 {
     mVertices = v;

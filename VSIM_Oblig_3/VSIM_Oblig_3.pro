@@ -14,6 +14,7 @@ SOURCES += main.cpp \
     logger.cpp \
     mainwindow.cpp \
     pointlight.cpp \
+    quadtraticpolynomial.cpp \
     renderwindow.cpp \
     shader.cpp \
     camera.cpp \
@@ -21,6 +22,7 @@ SOURCES += main.cpp \
     texture.cpp \
     vector3d.cpp \
     vertex.cpp \
+    visualcurve.cpp \
     visualobject.cpp \
     objLoader.cpp \
     soundsource.cpp \
@@ -37,6 +39,7 @@ HEADERS += \
     logger.h \
     mainwindow.h \
     pointlight.h \
+    quadtraticpolynomial.h \
     renderwindow.h \
     shader.h\
     camera.h \
@@ -44,6 +47,7 @@ HEADERS += \
     texture.h \
     vector3d.h \
     vertex.h \
+    visualcurve.h \
     visualobject.h \
     objLoader.h \
     soundmanager.h \
