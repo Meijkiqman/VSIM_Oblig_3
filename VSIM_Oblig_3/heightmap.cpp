@@ -9,7 +9,7 @@ heightMap::heightMap(Shader* shader,  Texture* texture) : VisualObject(shader)
 {
 
     //array with pixels, relevant data: widht, height and hue. reads from file
-    unsigned char* data = stbi_load("../Eksamen-3Dprog/heightMaps/EksamenHeightmap.png",
+    unsigned char* data = stbi_load("../VSIM-Oblig_3/Assets/EksamenHeightmap.png",
                                         &width, &height, &nChannels,
                                         0);
     //Taken from https://learnopengl.com/Guest-Articles/2021/Tessellation/Height-map
@@ -123,54 +123,78 @@ void heightMap::draw()
 
 
 
-float heightMap::GetHeight(QVector3D pos)
+Result heightMap::GetHeight(QVector3D pos)
 {
-    //qDebug() << height << width;
-    //Find what width and height the pos is at
-    //and compare to the vertex data of the terrain
-    //Converts the float pos.x() to an in, so it can be used to refrence index'es form the vertex array
-    pos.setX(pos.x() + width/ 2);
-    pos.setZ(pos.z() + height / 2);
-    float x = pos.x();
-    float z = pos.z();
-    qDebug() << "Player pos: " << x << ", " << z;
-    //First vertex of the triangle
-    Vertex v1 = mVertices[(x * (width)) + z];
-    //Get the vertex to the right of v1
-    Vertex v2 = mVertices[((x)*width) + z + 1];
-    //Get the vertex beneath v1
-    Vertex v3 = mVertices[((x + 1) * width) + z + 1];
-    //Vertex under and right of v1
-    Vertex v4 = mVertices[((x + 1) * width) + z];
-
-    QVector3D bary = GetBaycentric(pos, QVector3D(v1.x, v1.y, v1.z), QVector3D(v2.x, v2.y, v2.z), QVector3D(v3.x, v3.y, v3.z));
-    if ((bary.x() + bary.y() + bary.z()) != 1) {
-        float a = v1.y * bary.x();
-        float b = v2.y * bary.y();
-        float c = v3.y * bary.z();
-        float height = a + b + c;
-        qDebug() << "Using top vertex:  " << height;
-        return height + 32;
+    Result r;
+    float a = 0, b = 0, c = 0, height = 0;
+    //Sjekker for trekant 1
+    QVector3D bary =  GetBarycentric(pos, mVertices[0], mVertices[1], mVertices[2]);
+    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
+        //Er denne trekanten
+        a = mVertices[0].y * bary.x();
+        b = mVertices[1].y * bary.y();
+        c = mVertices[2].y * bary.z();
+        height = a + b + c;
+        r.height = height;
+        r.v1 = mVertices[0];
+        r.v2 = mVertices[1];
+        r.v3 = mVertices[2];
+        qDebug() << "Returned triangle 1";
+        return r;
     }
-    else
-    {
-        bary = GetBaycentric(pos, QVector3D(v1.x, v1.y, v1.z), QVector3D(v2.x, v2.y, v2.z), QVector3D(v4.x, v4.y, v4.z));
-        float a = v1.y * bary.x();
-        float b = v2.y * bary.y();
-        float c = v4.y * bary.z();
-        float height = a + b + c;
-        qDebug() << "Using bottom vertex: " << height;
-        return height + 32;
+    bary = GetBarycentric(pos, mVertices[1], mVertices[3], mVertices[2]);
+    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
+        //Er denne trekanten
+        a = mVertices[1].y * bary.x();
+        b = mVertices[3].y * bary.y();
+        c = mVertices[2].y * bary.z();
+        height = a + b + c;
+        r.height = height;
+        r.v1 = mVertices[1];
+        r.v2 = mVertices[3];
+        r.v3 = mVertices[2];
+        qDebug() << "Returned triangle 2";
+        return r;
     }
-
-
-
+    bary = GetBarycentric(pos, mVertices[1], mVertices[5], mVertices[3]);
+    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
+        //Er denne trekanten
+        a = mVertices[1].y * bary.x();
+        b = mVertices[5].y * bary.y();
+        c = mVertices[3].y * bary.z();
+        height = a + b + c;
+        r.height = height;
+        r.v1 = mVertices[1];
+        r.v2 = mVertices[5];
+        r.v3 = mVertices[3];
+        qDebug() << "Returned triangle 3";
+        return r;
+    }
+    bary = GetBarycentric(pos, mVertices[1], mVertices[4], mVertices[5]);
+    if(((0 <= bary.x()) && (bary.x() <= 1)) && ((0 <= bary.y()) && (bary.y() <= 1)) && ((0 <= bary.z()) && (bary.z() <= 1))){
+        //Er denne trekanten
+        a = mVertices[1].y * bary.x();
+        b = mVertices[4].y * bary.y();
+        c = mVertices[5].y * bary.z();
+        height = a + b + c;
+        r.height = height;
+        r.v1 = mVertices[1];
+        r.v2 = mVertices[4];
+        r.v3 = mVertices[5];
+        qDebug() << "Returned triangle 4";
+        return r;
+    }
+    return r;
 }
 
 
-QVector3D heightMap::GetBaycentric(QVector3D point, QVector3D a, QVector3D b, QVector3D c)
-{
+
+
+QVector3D heightMap::GetBarycentric(QVector3D point, Vertex v1,  Vertex v2, Vertex v3){
     double u = 0, v = 0, w = 0;
+    QVector3D a(v1.x,v1.y,v1.z);
+    QVector3D b(v2.x,v2.y,v2.z);
+    QVector3D c(v3.x,v3.y,v3.z);
     //Finner x
     QVector3D x1 = b - a;
     QVector3D x2 = c - a;
@@ -185,7 +209,7 @@ QVector3D heightMap::GetBaycentric(QVector3D point, QVector3D a, QVector3D b, QV
     p.setY(0);
     q.setY(0);
     //Kryss produkt for u, delt på x
-    normal = QVector3D::crossProduct(p, q);
+    normal = QVector3D::crossProduct(p,q);
     u = normal.y() / x;
 
     p = c - point;
@@ -200,10 +224,11 @@ QVector3D heightMap::GetBaycentric(QVector3D point, QVector3D a, QVector3D b, QV
     q = b - point;
     p.setY(0);
     q.setY(0);
-
+    //Kryssprodukt for w, delt på x
     normal = QVector3D::crossProduct(p, q);
     w = normal.y() / x;
-    qDebug() << u << v << w;
+    //qDebug() << u << v << w;
     //Finn om punkten er innenfor eller utenfor triangelt
     return QVector3D(u, v, w);
+
 }

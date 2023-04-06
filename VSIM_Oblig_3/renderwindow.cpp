@@ -23,6 +23,7 @@
 #include "vector3d.h"
 #include "soundsource.h"
 #include "lighting.h"
+#include "heightmap.h"
 #include "pointlight.h"
 #include "mainwindow.h"
 #include "sun.h"
@@ -60,20 +61,20 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     mRenderTimer = new QTimer(this);
 
 
-    //Matte oblig 2 4.4.4
-    mMap.insert(std::pair<std::string, VisualObject*>{"QuadtraticPolynomial", new QuadtraticPolynomial(0.04565317f, -0.1114739f, 0.9789611f, 0.1f)});
-    std::vector<Vertex> points;
-    points.push_back(Vertex{ 3, 10, 0 });
-    points.push_back(Vertex{ 1, -5, 0 });
-    points.push_back(Vertex{ -6.9, 4.2, 0 });
-    points.push_back(Vertex{ 3.7, -8.2, 0 });
-    points.push_back(Vertex{ 2, 5, 0 });
-    points.push_back(Vertex{ 7, -2.6, 0 });
-    points.push_back(Vertex{ -3.3, 1.7, 0 });
-    for (auto i = 0; i < points.size(); i++)
-    {
-        mMap.insert(std::pair<std::string, VisualObject*>{ std::to_string(i), new VisualPoint(points)});
-    }
+    ////Matte oblig 2 4.4.4
+    //mMap.insert(std::pair<std::string, VisualObject*>{"QuadtraticPolynomial", new QuadtraticPolynomial(0.04565317f, -0.1114739f, 0.9789611f, 0.1f)});
+    //std::vector<Vertex> points;
+    //points.push_back(Vertex{ 3, 10, 0 });
+    //points.push_back(Vertex{ 1, -5, 0 });
+    //points.push_back(Vertex{ -6.9, 4.2, 0 });
+    //points.push_back(Vertex{ 3.7, -8.2, 0 });
+    //points.push_back(Vertex{ 2, 5, 0 });
+    //points.push_back(Vertex{ 7, -2.6, 0 });
+    //points.push_back(Vertex{ -3.3, 1.7, 0 });
+    //for (auto i = 0; i < points.size(); i++)
+    //{
+    //    mMap.insert(std::pair<std::string, VisualObject*>{ std::to_string(i), new VisualPoint(points)});
+    //}
 }
 
 RenderWindow::~RenderWindow()
@@ -143,6 +144,9 @@ void RenderWindow::init()
     mShaders.insert(std::pair<std::string, Shader*>{"TextureShader", new Shader("../VSIM_Oblig_3/shaders/textureshader.vert",
         "../VSIM_Oblig_3/shaders/textureshader.frag")});
 
+    mShaders.insert(std::pair<std::string, Shader*>{"HeightShader", new Shader("../VSIM_Oblig_3/shaders/heightshader.vert",
+                                                                                    "../VSIM_Oblig_3/shaders/heightshader.frag")});
+
    
 
     //Set the material properties of the lightshader
@@ -168,6 +172,15 @@ void RenderWindow::init()
    //               new TriangleSurface()});
 
     //mMap insert of primitve objects:
+
+    //mHeightMap = new heightMap(mShaders["phongshader"],new Texture("..//VSIM_Oblig_3/Textures/chessboard.bmp"));
+
+    //mMap.insert(std::pair<std::string, VisualObject*>{"heightMap",
+    //             mHeightMap});
+
+    //mMap.insert(std::pair<std::string, VisualObject*>{"heightMap",
+    //    new heightMap("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/chessboard.bmp"))});
+
     mMap.insert(std::pair<std::string, VisualObject*>{"plane",
         new objLoader("../VSIM_Oblig_3/objFiles/plane.obj", mShaders["phongshader"], new Texture("..//VSIM_Oblig_3/Textures/chessboard.bmp"))});
 

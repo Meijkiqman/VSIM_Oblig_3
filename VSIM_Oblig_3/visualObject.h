@@ -6,7 +6,7 @@
 #include <vector>
 #include "vertex.h"
 #include "vector3d.h"
-
+#include <glm/glm.hpp>
 
 class Vertex;
 class Texture;

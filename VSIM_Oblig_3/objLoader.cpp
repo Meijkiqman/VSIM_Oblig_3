@@ -8,7 +8,7 @@
 #include "vertex.h"
 #include "texture.h"
 
-objLoader::objLoader(std::string fileName) 
+objLoader::objLoader(std::string fileName)
 {
     readFile(fileName);
     mTexture = nullptr;
@@ -70,7 +70,7 @@ void objLoader::init()
 }
 
 
-void objLoader::draw() 
+void objLoader::draw()
 {
     if (mTexture)
     {

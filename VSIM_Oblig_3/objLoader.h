@@ -17,4 +17,4 @@ protected:
     GLuint mIBO{ 0 };
 };
 
-#endif // OBJLOADER_H 
+#endif // OBJLOADER_H

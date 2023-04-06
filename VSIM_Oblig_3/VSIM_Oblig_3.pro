@@ -13,6 +13,7 @@ SOURCES += main.cpp \
     lighting.cpp \
     logger.cpp \
     mainwindow.cpp \
+    objloader.cpp \
     pointlight.cpp \
     quadtraticpolynomial.cpp \
     renderwindow.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     lighting.h \
     logger.h \
     mainwindow.h \
+    objloader.h \
     pointlight.h \
     quadtraticpolynomial.h \
     renderwindow.h \
